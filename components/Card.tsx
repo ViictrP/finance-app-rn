@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 const Container = styled.View`
   flex: 1;
-  border-radius: 25px;
+  border-radius: 20px;
   background-color: #FFF;
   padding: 20px;
 `;

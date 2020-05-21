@@ -16,7 +16,7 @@ import {MONTHS} from "../../components/utils/calendar/CalendarMonth";
 import Colors from "../../constants/Colors";
 import CreditCardForm from "../../components/CreditCardForm";
 
-YellowBox.ignoreWarnings(['VirtualizedLists should never be nested']);
+YellowBox.ignoreWarnings(['VirtualizedLists should never be nested', 'Calling `getNode()`']);
 
 function CardsScreen(props) {
 	const [cards, setCards] = useState(new Array<Card>());
