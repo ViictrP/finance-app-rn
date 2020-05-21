@@ -269,7 +269,7 @@ function CardsScreen(props) {
 									<Separator style={{flex: .5}}/>
 									<View style={{flex: 1, flexDirection: 'row'}}>
 										<IndicatorSquare>
-											<Icon name="arrow-up" size={30} color={Colors.PRIMARY}/>
+											<Icon name="arrow-up" size={30} color={Colors.ACCENT}/>
 										</IndicatorSquare>
 										<Square>
 											<ProductSansText

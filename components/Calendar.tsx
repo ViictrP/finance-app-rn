@@ -41,7 +41,7 @@ export default function Calendar(props) {
 		<Container>
 			<Button onPress={() => previewsMonth()}>
 				<ProductSansText style={{fontSize: 20}}>
-					<Icon name="arrow-left" size={20} color={Colors.PRIMARY}/>
+					<Icon name="arrow-left" size={20} color={Colors.TEXT_PRIMARY}/>
 				</ProductSansText>
 			</Button>
 			<Animated.View style={{transform: [{scale: scale}]}}>

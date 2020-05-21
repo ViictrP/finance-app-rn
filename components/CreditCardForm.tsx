@@ -19,7 +19,7 @@ const screenHeight = Dimensions.get('window').height;
 function CreditCardForm(props) {
 	const formRef = useRef(null);
 	const [state, setState] = useState({
-		top: new Animated.Value(20)
+		top: new Animated.Value(screenHeight)
 	});
 
 	useEffect(() => {
