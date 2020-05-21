@@ -304,6 +304,7 @@ function CardsScreen(props) {
 							<Separator style={{height: 30}}/>
 							<FlatList
 								data={list}
+								keyExtractor={item => item.id.toString()}
 								renderItem={({item}) =>
 									<Item
 										title={item.title}
