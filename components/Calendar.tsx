@@ -41,7 +41,7 @@ export default function Calendar(props) {
 		<Container>
 			<Button onPress={() => previewsMonth()}>
 				<ProductSansText style={{fontSize: 20}}>
-					<Icon name="arrow-left" size={20} color={Colors.TEXT_PRIMARY}/>
+					<Icon name="arrow-left" size={20} color={Colors.WHITE}/>
 				</ProductSansText>
 			</Button>
 			<Animated.View style={{transform: [{scale: scale}]}}>
@@ -49,7 +49,7 @@ export default function Calendar(props) {
 			</Animated.View>
 			<Button onPress={() => nextMonth()}>
 				<ProductSansText style={{fontSize: 20}}>
-					<Icon name="arrow-right" size={20} color={Colors.TEXT_PRIMARY}/>
+					<Icon name="arrow-right" size={20} color={Colors.WHITE}/>
 				</ProductSansText>
 			</Button>
 		</Container>

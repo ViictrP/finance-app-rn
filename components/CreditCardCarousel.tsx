@@ -17,9 +17,9 @@ export default function CreditCardCarousel(props) {
             <CreditCard style={{width: 250, height: 330}}
                         shadow={true}
                         flag={card.flag}
-                        cardLimit={card.limit.toFixed(2)}
-                        cardTitle={card.description}
-                        cardNumber={card.cardNumber} />
+                        limit={card.limit.toFixed(2)}
+                        title={card.description}
+                        number={card.cardNumber} />
         );
     }
 

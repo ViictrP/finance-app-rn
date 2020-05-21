@@ -10,6 +10,7 @@ export default {
     WARNING_TEXT: '#666804',
     NOTICE_BACKGROUND: '#2f95dc',
     NOTICE_TEXT: '#fff',
+    WHITE: '#FFF',
     MODAL_BACKGROUND: '#FFF',
     PRIMARY: '#2f95dc',
     ACCENT: '#DDD',

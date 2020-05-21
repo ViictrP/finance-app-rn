@@ -189,7 +189,7 @@ function CardsScreen(props) {
 							marginRight: 20,
 							borderRadius: 10
 						}}>
-							<Icon name={icon} size={20} color={Colors.FADDED_TEXT}/>
+							<Icon name={icon} size={28} color={Colors.FADDED_TEXT}/>
 						</View>
 						<View style={{alignContent: 'flex-start'}}>
 							<ProductSansText
