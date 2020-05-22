@@ -49,8 +49,8 @@ function Transactions(props) {
 				toValue: screenHeight,
 				duration: 300,
 			}).start(props.onClose);
-			setTransactions([]);
-			setInvoice([]);
+			// setTransactions([]);
+			// setInvoice([]);
 		}
 	}
 
