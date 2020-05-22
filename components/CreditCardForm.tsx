@@ -154,7 +154,7 @@ export default connect(mapStateToProps, dispatchToPropsClose)(CreditCardForm);
 
 const Header = styled.View`
 	height: 142px;
-	padding: 0 ${Layout.LAYOUT_SIDE_PADDINGS - 10}px;
+	padding: 0 ${Layout.LAYOUT_SIDE_PADDINGS}px;
 `;
 
 const CloseView = styled.View`
