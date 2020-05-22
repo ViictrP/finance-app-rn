@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {dispatchToPropsClose, mapStateToProps} from './utils/redux/ReduxMaps';
 
 import styled from 'styled-components';
-import {Animated, Button, Dimensions, TouchableOpacity, View} from "react-native";
+import {Animated, Button, Dimensions, TouchableOpacity, View, Easing} from "react-native";
 import {Form} from '@unform/mobile';
 import {ProductSansBoldText, ProductSansText} from "./StyledText";
 import Icon from "react-native-vector-icons/Feather";
@@ -33,10 +33,11 @@ function CreditCardForm(props) {
 
 	function toggleCardFormScreen() {
 		if (props.action === 'openCardForm') {
-			Animated.spring(state.top, {
+			Animated.timing(state.top, {
 				useNativeDriver: false,
 				toValue: 54,
-				bounciness: 6
+				duration: 200,
+				easing: Easing.inOut(Easing.linear)
 			}).start();
 		}
 
@@ -45,6 +46,7 @@ function CreditCardForm(props) {
 				useNativeDriver: false,
 				toValue: screenHeight,
 				duration: 300,
+				easing: Easing.inOut(Easing.linear)
 			}).start(props.onClose);
 			formRef.current.reset();
 		}
