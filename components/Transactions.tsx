@@ -39,7 +39,7 @@ function Transactions(props) {
 			Animated.spring(state.top, {
 				useNativeDriver: false,
 				toValue: 54,
-				bounciness: 6
+				bounciness: 3
 			}).start();
 		}
 

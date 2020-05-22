@@ -25,6 +25,10 @@ const reducer = (state: IGlobalState = initialState, action: IReduxAction): IGlo
 			return {action: 'openCardForm'};
 		case 'CLOSE_CARD_FORM':
 			return {action: 'closeCardForm'};
+		case 'OPEN_TRANSACTIONS_FORM':
+			return {action: 'openTransactionsForm'};
+		case 'CLOSE_TRANSACTIONS_FORM':
+			return {action: 'closeTransactionsForm'};
 		default:
 			return state;
 	}

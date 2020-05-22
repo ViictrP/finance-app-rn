@@ -21,6 +21,7 @@ import domain from '../../src/domain/CreditCardDomain';
 import InvoiceItem from "../../src/model/InvoiceItem";
 import moment from 'moment';
 import console from 'reactotron-react-native';
+import TransactionForm from "../../components/TransactionForm";
 
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested', 'Calling `getNode()`']);
 
@@ -72,6 +73,34 @@ function CardsScreen(props) {
 		StatusBar.setBarStyle('dark-content', true);
 	}
 
+	function openTransactionsForm() {
+		Animated.timing(scale, {
+			useNativeDriver: false,
+			toValue: 0.9,
+			duration: 150
+		}).start();
+
+		Animated.spring(opacity, {
+			useNativeDriver: false,
+			toValue: 0.5,
+		}).start();
+		StatusBar.setBarStyle('light-content', true);
+	}
+
+	function closeTransactionsForm() {
+		Animated.timing(scale, {
+			useNativeDriver: false,
+			toValue: 1,
+			duration: 150
+		}).start();
+
+		Animated.spring(opacity, {
+			useNativeDriver: false,
+			toValue: 1
+		}).start();
+		StatusBar.setBarStyle('dark-content', true);
+	}
+
 	function openCardForm() {
 		Animated.timing(scale, {
 			useNativeDriver: false,
@@ -105,7 +134,9 @@ function CardsScreen(props) {
 			'openCardForm': () => openCardForm(),
 			'closeCardForm': () => closeCardForm(),
 			'openTransactions': () => openTransactions(),
-			'closeTransactions': () => closeTransactions()
+			'closeTransactions': () => closeTransactions(),
+			'openTransactionsForm': () => openTransactionsForm(),
+			'closeTransactionsForm': () => closeTransactionsForm()
 		}[action]();
 	}
 
@@ -138,6 +169,7 @@ function CardsScreen(props) {
 		<RootView>
 			<Transactions/>
 			<CreditCardForm onClose={reload}/>
+			<TransactionForm onClose={reload}/>
 			<Animated.View style={{
 				flex: 1,
 				transform: [{scale: scale}],
@@ -228,7 +260,7 @@ function CardsScreen(props) {
 									}}>Transações</ProductSansBoldText>
 								<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
 									<Separator style={{width: 10}}/>
-									<TouchableOpacity>
+									<TouchableOpacity onPress={props.openTransactionsForm}>
 										<ProductSansText>Add</ProductSansText>
 									</TouchableOpacity>
 									<TouchableOpacity onPress={props.openTransactions}>

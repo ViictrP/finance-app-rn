@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {dispatchToPropsClose, mapStateToProps} from './utils/redux/ReduxMaps';
 
 import styled from 'styled-components';
-import {Animated, Button, Dimensions, TouchableOpacity, View, Easing} from "react-native";
+import {Animated, Button, Dimensions, Easing, TouchableOpacity, View} from "react-native";
 import {Form} from '@unform/mobile';
 import {ProductSansBoldText, ProductSansText} from "./StyledText";
 import Icon from "react-native-vector-icons/Feather";
@@ -14,7 +14,6 @@ import Layout from "../constants/Layout";
 import creditCardDomain from '../src/domain/CreditCardDomain';
 import CreditCard from "../src/model/CreditCard";
 import * as Yup from 'yup';
-import console from 'reactotron-react-native';
 
 Yup.setLocale({
 	mixed: {
@@ -33,7 +32,7 @@ Yup.setLocale({
 
 const screenHeight = Dimensions.get('window').height;
 
-function CreditCardForm(props) {
+function TransactionForm(props) {
 	const formRef = useRef(null);
 	const [state, setState] = useState({
 		top: new Animated.Value(screenHeight)
@@ -45,7 +44,7 @@ function CreditCardForm(props) {
 	}, [props.action]);
 
 	function toggleCardFormScreen() {
-		if (props.action === 'openCardForm') {
+		if (props.action === 'openTransactionsForm') {
 			Animated.spring(state.top, {
 				useNativeDriver: false,
 				toValue: 54,
@@ -53,7 +52,7 @@ function CreditCardForm(props) {
 			}).start();
 		}
 
-		if (props.action === 'closeCardForm') {
+		if (props.action === 'closeTransactionsForm') {
 			Animated.timing(state.top, {
 				useNativeDriver: false,
 				toValue: screenHeight,
@@ -80,8 +79,7 @@ function CreditCardForm(props) {
 				abortEarly: false,
 			});
 			// Validation passed
-			creditCardDomain.save(card);
-			alert('Cartão registrado com sucesso.');
+			alert('Regra de nova transação não inserida ainda...');
 			reset();
 		} catch (err) {
 			const validationErrors = {};
@@ -105,21 +103,21 @@ function CreditCardForm(props) {
 			borderRadius: 20,
 			overflow: 'hidden'
 		}}>
-			<Separator style={{height: 90}} />
+			<Separator style={{height: 90}}/>
 			<Header>
 				<ProductSansBoldText style={{fontSize: 30, color: Colors.TEXT_PRIMARY}}>
-					Novo cartão de crédito
+					Adicionar nova transação
 				</ProductSansBoldText>
 				<ProductSansText style={{fontSize: 18, color: Colors.FADDED_TEXT, marginTop: 8, textAlign: 'left'}}>
-					Para cadastrar um novo cartão, preencha todas as informações necessárias.
+					Para cadastrar uma nova transação, preencha todas as informações necessárias.
 				</ProductSansText>
 				<ProductSansBoldText style={{fontSize: 18, color: Colors.TINT_COLOR, marginTop: 8, textAlign: 'left'}}>
 					Os campos com o ícone colorido são obrigatórios.
 				</ProductSansBoldText>
 			</Header>
-			<Separator style={{height: 35}} />
+			<Separator style={{height: 35}}/>
 			<TouchableOpacity
-				onPress={props.closeCardForm}
+				onPress={props.closeTransactionsForm}
 				style={{position: 'absolute', top: 30, right: 30, marginLeft: -22, zIndex: 1}}>
 				<CloseView>
 					<Icon name='x' size={28} color="#546bfb"/>
@@ -128,16 +126,16 @@ function CreditCardForm(props) {
 			<Content>
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
-						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask="" />
-						<Separator style={{height: 20}} />
-						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} mask="only-numbers" />
-						<Separator style={{height: 20}} />
-						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} mask="money" />
-						<Separator style={{height: 20}} />
-						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} mask="" />
-						<Separator style={{height: 20}} />
-						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} mask="only-numbers" />
-						<Separator style={{height: 30}} />
+						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask=""/>
+						<Separator style={{height: 20}}/>
+						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} mask="only-numbers"/>
+						<Separator style={{height: 20}}/>
+						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} mask="money"/>
+						<Separator style={{height: 20}}/>
+						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} mask=""/>
+						<Separator style={{height: 20}}/>
+						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} mask="only-numbers"/>
+						<Separator style={{height: 30}}/>
 						<Button
 							title="Cadastrar"
 							onPress={() => formRef.current.submitForm()}
@@ -149,7 +147,7 @@ function CreditCardForm(props) {
 	);
 }
 
-export default connect(mapStateToProps, dispatchToPropsClose)(CreditCardForm);
+export default connect(mapStateToProps, dispatchToPropsClose)(TransactionForm);
 
 const Header = styled.View`
 	height: 142px;
