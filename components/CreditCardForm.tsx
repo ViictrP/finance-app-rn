@@ -11,8 +11,8 @@ import Colors from "../constants/Colors";
 import Input from "./Input";
 import Separator from "./Separator";
 import Layout from "../constants/Layout";
-import cardService from '../src/services/CardService';
-import Card from "../src/model/Card";
+import creditCardDomain from '../src/domain/CreditCardDomain';
+import CreditCard from "../src/model/CreditCard";
 import * as Yup from 'yup';
 import console from 'reactotron-react-native';
 
@@ -66,7 +66,7 @@ function CreditCardForm(props) {
 		}
 	}
 
-	async function submit(card: Card, {reset}) {
+	async function submit(card: CreditCard, {reset}) {
 		try {
 			// Remove all previous errors
 			formRef.current.setErrors({});
@@ -81,7 +81,7 @@ function CreditCardForm(props) {
 				abortEarly: false,
 			});
 			// Validation passed
-			cardService.save(card);
+			creditCardDomain.save(card);
 			alert('Cartão registrado com sucesso.');
 			reset();
 		} catch (err) {

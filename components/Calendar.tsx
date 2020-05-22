@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import styled from 'styled-components';
 import {Animated} from "react-native";
@@ -6,22 +6,25 @@ import {ProductSansText} from "./StyledText";
 import Icon from "react-native-vector-icons/Feather";
 import {JANUARY, MONTHS} from "./utils/calendar/CalendarMonth";
 import Colors from "../constants/Colors";
-import LinearGradient from "react-native-linear-gradient";
+import moment from 'moment';
 
 export default function Calendar(props) {
-	const [month, setMonth] = useState(MONTHS[JANUARY.index]);
+	const [month, setMonth] = useState(MONTHS[moment(new Date()).get('month')]);
+	const [year, setYear] = useState(moment(new Date()).get('year'));
 	const [scale, setScale] = useState(new Animated.Value(1));
 
 	function previewsMonth() {
 		setMonth(MONTHS[month.previous]);
+		setYear(year - 1);
 		animateMonth();
-		props.onMonthChange(month.previous);
+		props.onMonthChange(month.previous, year);
 	}
 
 	function nextMonth() {
 		setMonth(MONTHS[month.next]);
+		setYear(year + 1);
 		animateMonth();
-		props.onMonthChange(month.next);
+		props.onMonthChange(month.next, year);
 	}
 
 	function animateMonth() {

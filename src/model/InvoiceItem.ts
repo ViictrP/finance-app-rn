@@ -37,6 +37,21 @@ class InvoiceItem {
 			parcelNumber: 'int'
 		}
 	};
+
+	static fromRealmObject(object: Realm.Object): InvoiceItem {
+		const invoiceItem = new InvoiceItem();
+		invoiceItem.id = object['id'];
+		invoiceItem.title = object['title'];
+		invoiceItem.description = object['description'];
+		invoiceItem.when = object['when'];
+		invoiceItem.value = object['value'];
+		invoiceItem.parcelAmount = object['parcelAmount'];
+		invoiceItem.categoryId = object['categoryId'];
+		invoiceItem.parcelId = object['parcelId'];
+		invoiceItem.invoiceId = object['invoiceId'];
+		invoiceItem.parcelNumber = object['parcelNumber'];
+		return invoiceItem;
+	}
 }
 
 export default InvoiceItem;

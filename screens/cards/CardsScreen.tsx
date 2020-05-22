@@ -4,7 +4,7 @@ import CreditCardCarousel from '../../components/CreditCardCarousel';
 import {ContentContainer, IndicatorSquare, RootView, Square} from './Style';
 import {ProductSansBoldText, ProductSansText} from '../../components/StyledText';
 import Layout from '../../constants/Layout';
-import Card from '../../src/model/Card';
+import CreditCard from '../../src/model/CreditCard';
 import ProgressBar from "../../components/ProgressBar";
 import Separator from "../../components/Separator";
 import Icon from 'react-native-vector-icons/Feather';
@@ -17,15 +17,16 @@ import Colors from "../../constants/Colors";
 import CreditCardForm from "../../components/CreditCardForm";
 import TransactionItem from "../../components/TransactionItem";
 import Constants from "../../constants/Constants";
-import cardService from '../../src/services/CardService';
+import domain from '../../src/domain/CreditCardDomain';
 import InvoiceItem from "../../src/model/InvoiceItem";
 import moment from 'moment';
+import console from 'reactotron-react-native';
 
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested', 'Calling `getNode()`']);
 
 function CardsScreen(props) {
-	const [cards, setCards] = useState(new Array<Card>());
-	const [card, setCard] = useState(new Card());
+	const [cards, setCards] = useState(domain.findByUser(Constants.ONE));
+	const [card, setCard] = useState(cards[0]);
 	const [percentage, setPercentage] = useState(0);
 	const [scale, setScale] = useState(new Animated.Value(1));
 	const [opacity, setOpacity] = useState(new Animated.Value(1));
@@ -36,12 +37,7 @@ function CardsScreen(props) {
 	useEffect(reload, []);
 
 	function reload() {
-		const cards = cardService.findByUser(Constants.ONE);
-		setTransactions([
-			new InvoiceItem(1, 'Apple Inc.', 'Macbook Pro 16', new Date(), 27699.99, 'shopping-cart'),
-			new InvoiceItem(2, 'Facebook Inc.', 'AdSenses', new Date(), 99.99, 'shopping-cart'),
-			new InvoiceItem(3, 'Google Inc.', 'Google Cloud Platform', new Date(), 7699.99, 'shopping-cart')
-		]);
+		const cards = domain.findByUser(Constants.ONE);
 		if (cards) {
 			setCards(cards);
 			creditCardChanged(0);
@@ -117,16 +113,23 @@ function CardsScreen(props) {
 		executeAction(props.action);
 	}
 
-	function onMonthChanged(index) {
-		console.log(MONTHS[index].internacional.ptBr);
+	function onMonthChanged(index, year) {
+		if (card.id) {
+			const monthId = MONTHS[index].index;
+			setTransactions(domain.getTransactions(card.id, monthId, year, 10));
+		}
 	}
 
 	function creditCardChanged(index: number) {
 		if (cards.length) {
-			const card = cards[index];
-			setCard(card);
+			const creditCard = cards[index];
+			setCard(creditCard);
+			const today = new Date();
+			const month = MONTHS[moment(today).get('month')];
+			const year = moment(today).get('year');
+			setTransactions(domain.getTransactions(creditCard.id, month.index, year, 10));
 			setPercentage(
-				100 - (card.availableLimit * 100) / card.limit
+				100 - (creditCard.availableLimit * 100) / creditCard.limit
 			);
 		}
 	}
@@ -134,7 +137,7 @@ function CardsScreen(props) {
 	return (
 		<RootView>
 			<Transactions/>
-			<CreditCardForm onClose={reload} />
+			<CreditCardForm onClose={reload}/>
 			<Animated.View style={{
 				flex: 1,
 				transform: [{scale: scale}],
@@ -166,7 +169,11 @@ function CardsScreen(props) {
 						<Calendar onMonthChange={onMonthChanged}/>
 						<Separator style={{height: 20}}/>
 						<ContentContainer>
-							<View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+							<View style={{
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+								alignItems: 'center'
+							}}>
 								<ProductSansBoldText
 									style={{fontSize: Layout.TITLE_FONT_SIZE}}>Balanço</ProductSansBoldText>
 								<ProductSansText style={{fontSize: 20}}>{percentage.toFixed(2)}%</ProductSansText>
@@ -188,7 +195,7 @@ function CardsScreen(props) {
 											<ProductSansText
 												style={{color: Colors.FADDED_TEXT}}>Gasto</ProductSansText>
 											<ProductSansBoldText
-												style={{fontSize: 20}}>R${(card.limit - card.availableLimit).toFixed(0)}</ProductSansBoldText>
+												style={{fontSize: 20}}>R${(card ? (card.limit - card.availableLimit) : 0).toFixed(0)}</ProductSansBoldText>
 										</Square>
 									</View>
 									<Separator style={{flex: .5}}/>
@@ -200,7 +207,7 @@ function CardsScreen(props) {
 											<ProductSansText
 												style={{color: Colors.FADDED_TEXT}}>Disponível</ProductSansText>
 											<ProductSansBoldText
-												style={{fontSize: 20}}>R${card.availableLimit}</ProductSansBoldText>
+												style={{fontSize: 20}}>R${card ? card.availableLimit : 0}</ProductSansBoldText>
 										</Square>
 									</View>
 								</View>
@@ -215,7 +222,10 @@ function CardsScreen(props) {
 								justifyContent: 'space-between'
 							}}>
 								<ProductSansBoldText
-									style={{flex: 1, fontSize: Layout.TITLE_FONT_SIZE}}>Transações</ProductSansBoldText>
+									style={{
+										flex: 1,
+										fontSize: Layout.TITLE_FONT_SIZE
+									}}>Transações</ProductSansBoldText>
 								<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
 									<Separator style={{width: 10}}/>
 									<TouchableOpacity>

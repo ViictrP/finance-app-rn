@@ -1,7 +1,7 @@
 import Invoice from "./Invoice";
 import Constants from "../../constants/Constants";
 
-class Card {
+class CreditCard {
 
     public id?: number;
     public description: string;
@@ -13,14 +13,14 @@ class Card {
     public userId: number;
     public invoices: Array<Invoice>;
 
-    constructor(card?: Card) {
-        this.id = card?.id
-        this.description = card?.description!;
-        this.closeDay = Number(card?.closeDay);
-        this.limit = Number(card?.limit);
-        this.availableLimit = Number(card?.limit);
-        this.flag = card?.flag!;
-        this.cardNumber = Number(card?.cardNumber);
+    constructor(creditCard?: CreditCard) {
+        this.id = creditCard?.id
+        this.description = creditCard?.description!;
+        this.closeDay = Number(creditCard?.closeDay);
+        this.limit = Number(creditCard?.limit);
+        this.availableLimit = Number(creditCard?.limit);
+        this.flag = creditCard?.flag!;
+        this.cardNumber = Number(creditCard?.cardNumber);
         this.userId = Constants.ONE;
     }
 
@@ -39,8 +39,8 @@ class Card {
         }
     };
 
-    static fromRealmObject(object: Realm.Object): Card {
-        const card = new Card();
+    static fromRealmObject(object: Realm.Object): CreditCard {
+        const card = new CreditCard();
         card.id = object['id'];
         card.description = object['description'];
         card.closeDay = object['closeDay'];
@@ -53,4 +53,4 @@ class Card {
     }
 }
 
-export default Card;
+export default CreditCard;

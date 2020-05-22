@@ -1,9 +1,11 @@
 import Realm from 'realm';
-import Card from '../model/Card';
+import CreditCard from '../model/CreditCard';
+import InvoiceItem from "../model/InvoiceItem";
+import Invoice from "../model/Invoice";
 
 let instance: Realm | null;
 
 export default function getRealm() {
-    if (!instance) instance = new Realm({ schema: [Card.schema] });
+    if (!instance) instance = new Realm({ schema: [CreditCard.schema, Invoice.schema, InvoiceItem.schema] });
     return instance!;
 }
