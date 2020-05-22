@@ -45,7 +45,6 @@ const CreditCardContainer = styled.View`
 
 const style = StyleSheet.create({
     creditCard: {
-        backgroundColor: Colors.TINT_COLOR,
         justifyContent: 'space-between'
     },
     cardName: {

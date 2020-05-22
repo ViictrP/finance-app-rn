@@ -1,5 +1,6 @@
 export default {
     TINT_COLOR: '#2f95dc',
+    TINT_COLOR_DARKER: '#0061ba',
     APP_BACKGROUND: '#FFF',
     TAB_ICON_DEFAULT: '#ccc',
     TAB_ICON_SELECTED: '#2f95dc',

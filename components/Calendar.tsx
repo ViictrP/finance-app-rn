@@ -6,6 +6,7 @@ import {ProductSansText} from "./StyledText";
 import Icon from "react-native-vector-icons/Feather";
 import {JANUARY, MONTHS} from "./utils/calendar/CalendarMonth";
 import Colors from "../constants/Colors";
+import LinearGradient from "react-native-linear-gradient";
 
 export default function Calendar(props) {
 	const [month, setMonth] = useState(MONTHS[JANUARY.index]);

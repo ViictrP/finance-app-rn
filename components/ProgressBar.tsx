@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {Animated, StyleSheet, Platform} from "react-native";
 import styled from 'styled-components';
+import LinearGradient from "react-native-linear-gradient";
 import makeElevation from "./utils/ElevationShadowStyle";
 
 export default function ProgressBar(props) {
