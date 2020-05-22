@@ -28,9 +28,9 @@ function Transactions(props) {
 
 	useEffect(() => {
 		setTransactions([
-			new InvoiceItem(1, 'Apple Inc.', 'Macbook Pro 16', new Date(), 27699.99, 'shopping-cart'),
-			new InvoiceItem(2, 'Facebook Inc.', 'AdSenses', new Date(), 99.99, 'shopping-cart'),
-			new InvoiceItem(3, 'Google Inc.', 'Google Cloud Platform', new Date(), 7699.99, 'shopping-cart')
+			new InvoiceItem(1, 'Apple Inc.', 'Loja', new Date(), 27699.99, 'shopping-cart'),
+			new InvoiceItem(2, 'Facebook Inc.', 'Online', new Date(), 99.99, 'shopping-cart'),
+			new InvoiceItem(3, 'Google Inc.', 'Online', new Date(), 7699.99, 'shopping-cart')
 		]);
 	}, []);
 
@@ -82,14 +82,13 @@ function Transactions(props) {
 				</ProductSansText>
 			</Header>
 			<Content>
-				<Button title="press" onPress={() => setTransactions([])} />
 				<CreditCard style={{width: '100%', height: 180}}
 				            shadow={true}
 				            flag="Mastercard"
 				            limit="12.500,00"
 				            title="Itaucard Visa Gold"
 				            number="1542" />
-	            <Separator style={{height: 40}} />
+	            <Separator style={{height: 60}} />
 				<FlatList
 					data={transactions}
 					keyExtractor={item => item.id.toString()}

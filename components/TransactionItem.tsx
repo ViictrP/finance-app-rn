@@ -20,7 +20,7 @@ export default function TransactionItem({title, description, icon, value, when})
 					</View>
 					<View style={{flexDirection: 'column', alignContent: 'flex-start'}}>
 						<ProductSansText style={{fontSize: 15, marginBottom: 5, color: Colors.FADDED_TEXT}}>
-							Transporte
+							{description}
 						</ProductSansText>
 						<ProductSansText style={{fontSize: 20, marginBottom: 7, color: Colors.TEXT_PRIMARY}}>
 							{title}
