@@ -10,9 +10,10 @@ import Colors from "../constants/Colors";
 import TransactionItem from "./TransactionItem";
 import Layout from "../constants/Layout";
 import Separator from "./Separator";
-import {Form} from "@unform/mobile";
-import Input from "./Input";
 import CreditCard from "./CreditCard";
+import InvoiceItem from "../src/model/InvoiceItem";
+import moment from 'moment';
+import console from 'reactotron-react-native';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -20,54 +21,16 @@ function Transactions(props) {
 	const [state, setState] = useState({
 		top: new Animated.Value(screenHeight)
 	});
-	const [transactions, setTransactions] = useState([]);
+	const [transactions, setTransactions] = useState(new Array<InvoiceItem>());
+	const [invoice, setInvoice] = useState(null);
 
 	useEffect(toggleTransactionScreen, [props.action]);
 
 	useEffect(() => {
 		setTransactions([
-			{
-				id: 1,
-				title: 'Appointments',
-				subtitle: 'Appointments',
-				value: 100,
-				icon: 'shopping-cart'
-			},
-			{
-				id: 2,
-				title: 'Trips',
-				subtitle: 'Trips',
-				value: 135,
-				icon: 'shopping-cart'
-			},
-			{
-				id: 3,
-				title: 'Mettings',
-				subtitle: 'Mettings',
-				value: 169.90,
-				icon: 'shopping-cart'
-			},
-			{
-				id: 4,
-				title: 'Vacations',
-				subtitle: 'Vacations',
-				value: 209.05,
-				icon: 'shopping-cart'
-			},
-			{
-				id: 5,
-				title: 'Calls',
-				subtitle: 'Calls',
-				value: 685.09,
-				icon: 'shopping-cart'
-			},
-			{
-				id: 6,
-				title: 'Avoids',
-				subtitle: 'Avoids',
-				value: 98.09,
-				icon: 'shopping-cart'
-			}
+			new InvoiceItem(1, 'Apple Inc.', 'Macbook Pro 16', new Date(), 27699.99, 'shopping-cart'),
+			new InvoiceItem(2, 'Facebook Inc.', 'AdSenses', new Date(), 99.99, 'shopping-cart'),
+			new InvoiceItem(3, 'Google Inc.', 'Google Cloud Platform', new Date(), 7699.99, 'shopping-cart')
 		]);
 	}, []);
 
@@ -86,6 +49,8 @@ function Transactions(props) {
 				toValue: screenHeight,
 				duration: 300,
 			}).start(props.onClose);
+			setTransactions([]);
+			setInvoice([]);
 		}
 	}
 
@@ -131,9 +96,10 @@ function Transactions(props) {
 					renderItem={({item}) =>
 						<TransactionItem
 							title={item.title}
-							subtitle={item.subtitle}
+							description={item.description}
 							icon={item.icon}
 							value={item.value}
+							when={moment(item.when).format('LL')}
 						/>
 					}
 				/>

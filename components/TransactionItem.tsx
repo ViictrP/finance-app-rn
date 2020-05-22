@@ -5,7 +5,7 @@ import {ProductSansText} from "./StyledText";
 import Separator from "./Separator";
 import React from "react";
 
-export default function TransactionItem({title, subtitle, icon, value}) {
+export default function TransactionItem({title, description, icon, value, when}) {
 	return (
 		<View style={{paddingBottom: 10}}>
 			<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -20,15 +20,23 @@ export default function TransactionItem({title, subtitle, icon, value}) {
 					}}>
 						<Icon name={icon} size={28} color={Colors.FADDED_TEXT}/>
 					</View>
-					<View style={{alignContent: 'flex-start'}}>
-						<ProductSansText
-							style={{fontSize: 20, color: Colors.TEXT_PRIMARY}}>{title}</ProductSansText>
-						<ProductSansText
-							style={{fontSize: 13, color: Colors.FADDED_TEXT}}>{subtitle}</ProductSansText>
+					<View style={{flexDirection: 'column', justifyContent: 'space-between', alignContent: 'flex-start'}}>
+						<ProductSansText style={{fontSize: 20, color: Colors.TEXT_PRIMARY}}>
+							{title}
+						</ProductSansText>
+						<ProductSansText style={{fontSize: 15, color: Colors.FADDED_TEXT}}>
+							{description}
+						</ProductSansText>
 					</View>
 				</View>
-				<ProductSansText style={{fontSize: 20, color: Colors.TEXT_ACCENT}}>-
-					R${value}</ProductSansText>
+				<View style={{flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+					<ProductSansText style={{fontSize: 20, color: Colors.TEXT_ACCENT}}>
+						-R${value}
+					</ProductSansText>
+					<ProductSansText style={{color: Colors.FADDED_TEXT}}>
+						{when}
+					</ProductSansText>
+				</View>
 			</View>
 			<Separator style={{height: 15, borderBottomWidth: 0.2, borderBottomColor: Colors.SEPARATOR}}/>
 		</View>

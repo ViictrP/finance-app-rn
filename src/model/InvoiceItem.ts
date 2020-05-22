@@ -4,11 +4,22 @@ class InvoiceItem {
 	public description: string;
 	public when: Date;
 	public value: number;
+	public icon?: string;
 	public parcelAmount: number;
 	public categoryId?: number;
 	public parcelId?: number;
 	public invoiceId?: number;
 	public parcelNumber: number;
+
+
+	constructor(id?: number, title?: string, description?: string, when?: Date, value?: number, icon?: string) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.when = when;
+		this.value = value;
+		this.icon = icon;
+	}
 
 	static schema: Realm.ObjectSchema = {
 		name: 'invoiceItem',

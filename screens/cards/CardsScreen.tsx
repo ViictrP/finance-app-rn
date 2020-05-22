@@ -18,6 +18,8 @@ import CreditCardForm from "../../components/CreditCardForm";
 import TransactionItem from "../../components/TransactionItem";
 import Constants from "../../constants/Constants";
 import cardService from '../../src/services/CardService';
+import InvoiceItem from "../../src/model/InvoiceItem";
+import moment from 'moment';
 
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested', 'Calling `getNode()`']);
 
@@ -27,6 +29,7 @@ function CardsScreen(props) {
 	const [percentage, setPercentage] = useState(0);
 	const [scale, setScale] = useState(new Animated.Value(1));
 	const [opacity, setOpacity] = useState(new Animated.Value(1));
+	const [transactions, setTransactions] = useState(new Array<InvoiceItem>());
 
 	useEffect(toggleScale, [props.action]);
 
@@ -34,6 +37,11 @@ function CardsScreen(props) {
 
 	function reload() {
 		const cards = cardService.findByUser(Constants.ONE);
+		setTransactions([
+			new InvoiceItem(1, 'Apple Inc.', 'Macbook Pro 16', new Date(), 27699.99, 'shopping-cart'),
+			new InvoiceItem(2, 'Facebook Inc.', 'AdSenses', new Date(), 99.99, 'shopping-cart'),
+			new InvoiceItem(3, 'Google Inc.', 'Google Cloud Platform', new Date(), 7699.99, 'shopping-cart')
+		]);
 		if (cards) {
 			setCards(cards);
 			creditCardChanged(0);
@@ -112,51 +120,6 @@ function CardsScreen(props) {
 	function onMonthChanged(index) {
 		console.log(MONTHS[index].internacional.ptBr);
 	}
-
-	const list = [
-		{
-			id: 1,
-			title: 'Appointments',
-			subtitle: 'Appointments',
-			value: 100,
-			icon: 'shopping-cart'
-		},
-		{
-			id: 2,
-			title: 'Trips',
-			subtitle: 'Trips',
-			value: 135,
-			icon: 'shopping-cart'
-		},
-		{
-			id: 3,
-			title: 'Mettings',
-			subtitle: 'Mettings',
-			value: 169.90,
-			icon: 'shopping-cart'
-		},
-		{
-			id: 4,
-			title: 'Vacations',
-			subtitle: 'Vacations',
-			value: 209.05,
-			icon: 'shopping-cart'
-		},
-		{
-			id: 5,
-			title: 'Calls',
-			subtitle: 'Calls',
-			value: 685.09,
-			icon: 'shopping-cart'
-		},
-		{
-			id: 6,
-			title: 'Avoids',
-			subtitle: 'Avoids',
-			value: 98.09,
-			icon: 'shopping-cart'
-		}
-	];
 
 	function creditCardChanged(index: number) {
 		if (cards.length) {
@@ -265,14 +228,15 @@ function CardsScreen(props) {
 							</View>
 							<Separator style={{height: 30}}/>
 							<FlatList
-								data={list}
+								data={transactions}
 								keyExtractor={item => item.id.toString()}
 								renderItem={({item}) =>
 									<TransactionItem
 										title={item.title}
-										subtitle={item.subtitle}
+										description={item.description}
 										icon={item.icon}
 										value={item.value}
+										when={moment(item.when).format('LL')}
 									/>
 								}
 							/>
