@@ -15,6 +15,9 @@ import Calendar from "../../components/Calendar";
 import {MONTHS} from "../../components/utils/calendar/CalendarMonth";
 import Colors from "../../constants/Colors";
 import CreditCardForm from "../../components/CreditCardForm";
+import TransactionItem from "../../components/TransactionItem";
+import Constants from "../../constants/Constants";
+import cardService from '../../src/services/CardService';
 
 YellowBox.ignoreWarnings(['VirtualizedLists should never be nested', 'Calling `getNode()`']);
 
@@ -25,30 +28,17 @@ function CardsScreen(props) {
 	const [scale, setScale] = useState(new Animated.Value(1));
 	const [opacity, setOpacity] = useState(new Animated.Value(1));
 
-	useEffect(() => {
-		toggleScale();
-	}, [props.action]);
+	useEffect(toggleScale, [props.action]);
 
-	useEffect(() => buildCards(), []);
+	useEffect(reload, []);
 
-	function buildCards() {
-		const card = generateNew();
-		cards.push(card);
-		setPercentage(100 - (card.availableLimit * 100) / card.limit);
+	function reload() {
+		const cards = cardService.findByUser(Constants.ONE);
+		if (cards) {
+			setCards(cards);
+			creditCardChanged(0);
+		}
 	}
-
-	function generateNew() {
-		const card = new Card();
-		card.limit = parseFloat(Math.random().toFixed(2)) * 10000;
-		card.closeDay = 10;
-		card.availableLimit = 1500.00;
-		card.description = 'Itaucard Latam Pass';
-		card.flag = 'MASTERCARD';
-		card.cardNumber = 9162;
-		card.userId = 1;
-		return card;
-	}
-
 
 	function openTransactions() {
 		Animated.timing(scale, {
@@ -169,47 +159,19 @@ function CardsScreen(props) {
 	];
 
 	function creditCardChanged(index: number) {
-		const card = cards[index];
-		setCard(card);
-		setPercentage(
-			100 - (card.availableLimit * 100) / card.limit
-		);
-	}
-
-	function Item({title, subtitle, icon, value}) {
-		return (
-			<View style={{paddingBottom: 10}}>
-				<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-					<View style={{flexDirection: 'row'}}>
-						<View style={{
-							alignItems: 'center',
-							justifyContent: 'center',
-							width: 48,
-							height: 48,
-							marginRight: 20,
-							borderRadius: 10
-						}}>
-							<Icon name={icon} size={28} color={Colors.FADDED_TEXT}/>
-						</View>
-						<View style={{alignContent: 'flex-start'}}>
-							<ProductSansText
-								style={{fontSize: 20, color: Colors.TEXT_PRIMARY}}>{title}</ProductSansText>
-							<ProductSansText
-								style={{fontSize: 13, color: Colors.FADDED_TEXT}}>{subtitle}</ProductSansText>
-						</View>
-					</View>
-					<ProductSansText style={{fontSize: 20, color: Colors.TEXT_ACCENT}}>-
-						R${value}</ProductSansText>
-				</View>
-				<Separator style={{height: 15, borderBottomWidth: 0.2, borderBottomColor: Colors.SEPARATOR}}/>
-			</View>
-		);
+		if (cards.length) {
+			const card = cards[index];
+			setCard(card);
+			setPercentage(
+				100 - (card.availableLimit * 100) / card.limit
+			);
+		}
 	}
 
 	return (
 		<RootView>
-			<Transactions onClose={buildCards}/>
-			<CreditCardForm />
+			<Transactions/>
+			<CreditCardForm onClose={reload} />
 			<Animated.View style={{
 				flex: 1,
 				transform: [{scale: scale}],
@@ -306,7 +268,7 @@ function CardsScreen(props) {
 								data={list}
 								keyExtractor={item => item.id.toString()}
 								renderItem={({item}) =>
-									<Item
+									<TransactionItem
 										title={item.title}
 										subtitle={item.subtitle}
 										icon={item.icon}

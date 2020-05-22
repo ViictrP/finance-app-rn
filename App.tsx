@@ -7,6 +7,10 @@ import AppNavigator from './navigation/AppNavigator';
 import IGlobalState from './components/utils/IGlobalState';
 import IReduxAction from './components/utils/redux/IReduxAction';
 
+if(__DEV__) {
+	import('./ReactotronConfig').then(() => console.log('Reactotron Configured'))
+}
+
 const initialState: IGlobalState = {
 	action: 'closeTransactions'
 };

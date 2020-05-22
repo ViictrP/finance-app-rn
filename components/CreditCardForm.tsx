@@ -13,6 +13,23 @@ import Separator from "./Separator";
 import Layout from "../constants/Layout";
 import cardService from '../src/services/CardService';
 import Card from "../src/model/Card";
+import * as Yup from 'yup';
+import console from 'reactotron-react-native';
+
+Yup.setLocale({
+	mixed: {
+		default: 'Não é válido.',
+		required: 'Este campo é obrigatório',
+		notType: 'Este campo é obrigatório'
+	},
+	number: {
+		min: 'Deve ser maior ou igual a ${min}',
+		max: 'Deve ser menor ou igual a ${max}'
+	},
+	string: {
+		requiredField: 'Este campo é obrigatório'
+	}
+});
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -21,15 +38,11 @@ function CreditCardForm(props) {
 	const [state, setState] = useState({
 		top: new Animated.Value(screenHeight)
 	});
+	const [hasError, setHasError] = useState(true);
 
 	useEffect(() => {
 		toggleCardFormScreen();
 	}, [props.action]);
-
-	function submit(card: Card, {reset}) {
-		cardService.save(card).then(saved => console.log(saved));
-		reset();
-	}
 
 	function toggleCardFormScreen() {
 		if (props.action === 'openCardForm') {
@@ -48,11 +61,40 @@ function CreditCardForm(props) {
 				duration: 300,
 				easing: Easing.inOut(Easing.linear)
 			}).start(props.onClose);
+			formRef.current.setErrors({});
 			formRef.current.reset();
 		}
 	}
 
-	// @ts-ignore
+	async function submit(card: Card, {reset}) {
+		try {
+			// Remove all previous errors
+			formRef.current.setErrors({});
+			const schema = Yup.object().shape({
+				description: Yup.string().required(),
+				closeDay: Yup.number().min(1).max(31),
+				limit: Yup.number().required(),
+				flag: Yup.string().required(),
+				cardNumber: Yup.string().required()
+			});
+			await schema.validate(card, {
+				abortEarly: false,
+			});
+			// Validation passed
+			cardService.save(card);
+			alert('Cartão registrado com sucesso.');
+			reset();
+		} catch (err) {
+			const validationErrors = {};
+			if (err instanceof Yup.ValidationError) {
+				err.inner.forEach(error => {
+					validationErrors[error.path] = error.message;
+				});
+				formRef.current.setErrors(validationErrors);
+			}
+		}
+	}
+
 	return (
 		<Animated.ScrollView style={{
 			top: state.top,
@@ -87,17 +129,20 @@ function CreditCardForm(props) {
 			<Content>
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
-						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} type="text" />
+						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask="" />
 						<Separator style={{height: 20}} />
-						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} type="number" />
+						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} mask="only-numbers" />
 						<Separator style={{height: 20}} />
-						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} type="number" />
+						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} mask="money" />
 						<Separator style={{height: 20}} />
-						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} type="text" />
+						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} mask="" />
 						<Separator style={{height: 20}} />
-						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} type="number" />
+						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} mask="only-numbers" />
 						<Separator style={{height: 30}} />
-						<Button title="Cadastrar" onPress={() => formRef.current.submitForm()} />
+						<Button
+							title="Cadastrar"
+							onPress={() => formRef.current.submitForm()}
+						/>
 					</View>
 				</Form>
 			</Content>
