@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {dispatchToPropsClose, mapStateToProps} from './utils/redux/ReduxMaps';
 
 import styled from 'styled-components';
-import {Animated, Button, Dimensions, Easing, TouchableOpacity, View} from "react-native";
+import {Animated, Button, Dimensions, Easing, TouchableOpacity, View, StyleSheet} from "react-native";
 import {Form} from '@unform/mobile';
 import {ProductSansBoldText, ProductSansText} from "./StyledText";
 import Icon from "react-native-vector-icons/Feather";
@@ -12,8 +12,10 @@ import Input from "./Input";
 import Separator from "./Separator";
 import Layout from "../constants/Layout";
 import creditCardDomain from '../src/domain/CreditCardDomain';
+import CreditCardComponent from './CreditCard';
 import CreditCard from "../src/model/CreditCard";
 import * as Yup from 'yup';
+import console from 'reactotron-react-native';
 
 Yup.setLocale({
 	mixed: {
@@ -34,17 +36,23 @@ const screenHeight = Dimensions.get('window').height;
 
 function TransactionForm(props) {
 	const formRef = useRef(null);
+	const [creditCard, setCreditCard] = useState(null);
 	const [state, setState] = useState({
 		top: new Animated.Value(screenHeight)
 	});
 	const [hasError, setHasError] = useState(true);
 
-	useEffect(() => {
-		toggleCardFormScreen();
-	}, [props.action]);
+	useEffect(toggleCardFormScreen, [props.action]);
+
+	useEffect(loadCreditCardInfos, [creditCard]);
+
+	function loadCreditCardInfos() {
+		console.log(creditCard);
+	}
 
 	function toggleCardFormScreen() {
 		if (props.action === 'openTransactionsForm') {
+			setCreditCard(props.creditCard);
 			Animated.spring(state.top, {
 				useNativeDriver: false,
 				toValue: 54,
@@ -53,6 +61,7 @@ function TransactionForm(props) {
 		}
 
 		if (props.action === 'closeTransactionsForm') {
+			setCreditCard(null);
 			Animated.timing(state.top, {
 				useNativeDriver: false,
 				toValue: screenHeight,
@@ -124,18 +133,24 @@ function TransactionForm(props) {
 				</CloseView>
 			</TouchableOpacity>
 			<Content>
+				<CreditCardComponent
+					style={style.creditCard}
+		            shadow={true}
+		            flag="Mastercard"
+		            limit="12.500,00"
+		            title="Itaucard Visa Gold"
+		            number="1542"
+				/>
+				<Separator style={{height: 60}} />
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
-						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask=""/>
+						<Input name="title" icon="align-left" placeholder="Titulo..." required={true} mask=""/>
 						<Separator style={{height: 20}}/>
-						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} mask="only-numbers"/>
+						<Input name="description" icon="calendar" placeholder="Descrição..." required={true} mask="only-numbers"/>
 						<Separator style={{height: 20}}/>
-						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} mask="money"/>
+						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money"/>
 						<Separator style={{height: 20}}/>
-						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} mask=""/>
-						<Separator style={{height: 20}}/>
-						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} mask="only-numbers"/>
-						<Separator style={{height: 30}}/>
+
 						<Button
 							title="Cadastrar"
 							onPress={() => formRef.current.submitForm()}
@@ -148,6 +163,13 @@ function TransactionForm(props) {
 }
 
 export default connect(mapStateToProps, dispatchToPropsClose)(TransactionForm);
+
+const style = StyleSheet.create({
+	creditCard: {
+		width: '90%',
+		height: 180
+	}
+});
 
 const Header = styled.View`
 	height: 142px;
@@ -166,6 +188,8 @@ const CloseView = styled.View`
 const Content = styled.View`
 	height: ${screenHeight}px;
 	background-color: ${Colors.APP_BACKGROUND};
+	justify-content: center;
+	align-items: center;
 `;
 
 const Image = styled.Image`

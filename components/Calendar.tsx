@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 
 import styled from 'styled-components';
-import {Animated} from "react-native";
+import {Animated, View} from "react-native";
 import {ProductSansText} from "./StyledText";
 import Icon from "react-native-vector-icons/Feather";
-import {JANUARY, MONTHS} from "./utils/calendar/CalendarMonth";
+import {JANUARY, DECEMBER, MONTHS} from "./utils/calendar/CalendarMonth";
 import Colors from "../constants/Colors";
 import moment from 'moment';
+import console from 'reactotron-react-native';
 
 export default function Calendar(props) {
 	const [month, setMonth] = useState(MONTHS[moment(new Date()).get('month')]);
@@ -14,17 +15,27 @@ export default function Calendar(props) {
 	const [scale, setScale] = useState(new Animated.Value(1));
 
 	function previewsMonth() {
-		setMonth(MONTHS[month.previous]);
-		setYear(year - 1);
+		const previousMonth = MONTHS[month.previous];
+		setMonth(previousMonth);
+		let previousYear = year;
+		if (previousMonth.index === DECEMBER.index) {
+			previousYear -= 1;
+			setYear(previousYear);
+		}
 		animateMonth();
-		props.onMonthChange(month.previous, year);
+		props.onMonthChange(month.previous, previousYear);
 	}
 
 	function nextMonth() {
-		setMonth(MONTHS[month.next]);
-		setYear(year + 1);
+		const nextMonth = MONTHS[month.next];
+		setMonth(nextMonth);
+		let nextYear = year;
+		if (nextMonth.index === JANUARY.index) {
+			nextYear += 1;
+			setYear(nextYear);
+		}
 		animateMonth();
-		props.onMonthChange(month.next, year);
+		props.onMonthChange(nextMonth.index, nextYear);
 	}
 
 	function animateMonth() {
@@ -48,9 +59,12 @@ export default function Calendar(props) {
 					<Icon name="arrow-left" size={20} color={Colors.WHITE}/>
 				</ProductSansText>
 			</Button>
-			<Animated.View style={{transform: [{scale: scale}]}}>
-				<ProductSansText style={{fontSize: 25}}>{month.internacional.ptBr}</ProductSansText>
-			</Animated.View>
+			<View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>
+				<ProductSansText>{year}</ProductSansText>
+				<Animated.View style={{transform: [{scale: scale}]}}>
+					<ProductSansText style={{fontSize: 25}}>{month.internacional.ptBr}</ProductSansText>
+				</Animated.View>
+			</View>
 			<Button onPress={() => nextMonth()}>
 				<ProductSansText style={{fontSize: 20}}>
 					<Icon name="arrow-right" size={20} color={Colors.WHITE}/>

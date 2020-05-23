@@ -37,6 +37,8 @@ function CardsScreen(props) {
 
 	useEffect(reload, []);
 
+	useEffect(reloadCreditCardInfos, [card]);
+
 	function reload() {
 		const cards = domain.findByUser(Constants.ONE);
 		if (cards) {
@@ -146,22 +148,26 @@ function CardsScreen(props) {
 
 	function onMonthChanged(index, year) {
 		if (card.id) {
+			console.log(`${index}/${year}`);
 			const monthId = MONTHS[index].index;
 			setTransactions(domain.getTransactions(card.id, monthId, year, 10));
 		}
+	}
+
+	function reloadCreditCardInfos() {
+		const today = new Date();
+		const month = MONTHS[moment(today).get('month')];
+		const year = moment(today).get('year');
+		setTransactions(domain.getTransactions(card.id, month.index, year, 10));
+		setPercentage(
+			100 - (card.availableLimit * 100) / card.limit
+		);
 	}
 
 	function creditCardChanged(index: number) {
 		if (cards.length) {
 			const creditCard = cards[index];
 			setCard(creditCard);
-			const today = new Date();
-			const month = MONTHS[moment(today).get('month')];
-			const year = moment(today).get('year');
-			setTransactions(domain.getTransactions(creditCard.id, month.index, year, 10));
-			setPercentage(
-				100 - (creditCard.availableLimit * 100) / creditCard.limit
-			);
 		}
 	}
 
@@ -169,7 +175,7 @@ function CardsScreen(props) {
 		<RootView>
 			<Transactions/>
 			<CreditCardForm onClose={reload}/>
-			<TransactionForm onClose={reload}/>
+			<TransactionForm creditCard={card} onClose={reload}/>
 			<Animated.View style={{
 				flex: 1,
 				transform: [{scale: scale}],

@@ -33,8 +33,8 @@ class CreditCardDomain {
 		return cardService.findByUser(userId);
 	}
 
-	public getTransactions(creditCardId: number, month: number, year: number, limit?: number): Transactions {
-		const invoice = invoiceService.findByCreditCardMonthAndYear(creditCardId, month, year, limit);
+	public getTransactions(creditCardId: number, month: number, year: number, quantity?: number): Transactions {
+		const invoice = invoiceService.findByCreditCardMonthAndYear(creditCardId, month, year, quantity);
 		if (invoice) {
 			return invoiceItemService.findByInvoice(invoice.id);
 		}
