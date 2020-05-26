@@ -147,7 +147,7 @@ function CardsScreen(props) {
 	}
 
 	function onMonthChanged(index, year) {
-		if (card.id) {
+		if (card) {
 			console.log(`${index}/${year}`);
 			const monthId = MONTHS[index].index;
 			setTransactions(domain.getTransactions(card.id, monthId, year, 10));
@@ -155,13 +155,15 @@ function CardsScreen(props) {
 	}
 
 	function reloadCreditCardInfos() {
-		const today = new Date();
-		const month = MONTHS[moment(today).get('month')];
-		const year = moment(today).get('year');
-		setTransactions(domain.getTransactions(card.id, month.index, year, 10));
-		setPercentage(
-			100 - (card.availableLimit * 100) / card.limit
-		);
+		if(card) {
+			const today = new Date();
+			const month = MONTHS[moment(today).get('month')];
+			const year = moment(today).get('year');
+			setTransactions(domain.getTransactions(card.id, month.index, year, 10));
+			setPercentage(
+				100 - (card.availableLimit * 100) / card.limit
+			);
+		}
 	}
 
 	function creditCardChanged(index: number) {

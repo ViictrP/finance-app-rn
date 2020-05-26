@@ -5,17 +5,19 @@ import {dispatchToPropsClose, mapStateToProps} from './utils/redux/ReduxMaps';
 import styled from 'styled-components';
 import {Animated, Button, Dimensions, Easing, TouchableOpacity, View, StyleSheet} from "react-native";
 import {Form} from '@unform/mobile';
-import {ProductSansBoldText, ProductSansText} from "./StyledText";
-import Icon from "react-native-vector-icons/Feather";
-import Colors from "../constants/Colors";
-import Input from "./Input";
-import Separator from "./Separator";
-import Layout from "../constants/Layout";
+import {ProductSansBoldText, ProductSansText} from './StyledText';
+import Icon from 'react-native-vector-icons/Feather';
+import Colors from '../constants/Colors';
+import Input from './Input';
+import Separator from './Separator';
+import Layout from '../constants/Layout';
 import creditCardDomain from '../src/domain/CreditCardDomain';
 import CreditCardComponent from './CreditCard';
-import CreditCard from "../src/model/CreditCard";
+import CreditCard from '../src/model/CreditCard';
 import * as Yup from 'yup';
 import console from 'reactotron-react-native';
+import DatePicker from "./DatePicker";
+import InvoiceItem from "../src/model/InvoiceItem";
 
 Yup.setLocale({
 	mixed: {
@@ -73,32 +75,8 @@ function TransactionForm(props) {
 		}
 	}
 
-	async function submit(card: CreditCard, {reset}) {
-		try {
-			// Remove all previous errors
-			formRef.current.setErrors({});
-			const schema = Yup.object().shape({
-				description: Yup.string().required(),
-				closeDay: Yup.number().min(1).max(31),
-				limit: Yup.number().required(),
-				flag: Yup.string().required(),
-				cardNumber: Yup.string().required()
-			});
-			await schema.validate(card, {
-				abortEarly: false,
-			});
-			// Validation passed
-			alert('Regra de nova transação não inserida ainda...');
-			reset();
-		} catch (err) {
-			const validationErrors = {};
-			if (err instanceof Yup.ValidationError) {
-				err.inner.forEach(error => {
-					validationErrors[error.path] = error.message;
-				});
-				formRef.current.setErrors(validationErrors);
-			}
-		}
+	async function submit(transaction: InvoiceItem, {reset}) {
+		console.log(transaction);
 	}
 
 	return (
@@ -135,22 +113,25 @@ function TransactionForm(props) {
 			<Content>
 				<CreditCardComponent
 					style={style.creditCard}
-		            shadow={true}
-		            flag="Mastercard"
-		            limit="12.500,00"
-		            title="Itaucard Visa Gold"
-		            number="1542"
+					shadow={true}
+					flag="Mastercard"
+					limit="12.500,00"
+					title="Itaucard Visa Gold"
+					number="1542"
 				/>
-				<Separator style={{height: 60}} />
+				<Separator style={{height: 60}}/>
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
 						<Input name="title" icon="align-left" placeholder="Titulo..." required={true} mask=""/>
 						<Separator style={{height: 20}}/>
-						<Input name="description" icon="calendar" placeholder="Descrição..." required={true} mask="only-numbers"/>
+						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask=""/>
 						<Separator style={{height: 20}}/>
 						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money"/>
 						<Separator style={{height: 20}}/>
-
+						<DatePicker name="when" placeholder="Data da transação..." icon="calendar" required={true} />
+						<Separator style={{height: 20}}/>
+						<Input name="parcelAmount" icon="shopping-bag" placeholder="Quantidade de parcelas..." required={true} mask="only-numbers"/>
+						<Separator style={{height: 30}}/>
 						<Button
 							title="Cadastrar"
 							onPress={() => formRef.current.submitForm()}
