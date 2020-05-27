@@ -76,7 +76,7 @@ function TransactionForm(props) {
 	}
 
 	async function submit(transaction: InvoiceItem, {reset}) {
-		console.log(transaction);
+		alert(`${JSON.stringify(transaction)}`);
 		reset();
 	}
 
