@@ -77,6 +77,7 @@ function TransactionForm(props) {
 
 	async function submit(transaction: InvoiceItem, {reset}) {
 		console.log(transaction);
+		reset();
 	}
 
 	return (
@@ -128,7 +129,7 @@ function TransactionForm(props) {
 						<Separator style={{height: 20}}/>
 						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money"/>
 						<Separator style={{height: 20}}/>
-						<DatePicker name="when" placeholder="Data da transação..." icon="calendar" required={true} />
+						<DatePicker name="when" icon="calendar" required={true} />
 						<Separator style={{height: 20}}/>
 						<Input name="parcelAmount" icon="shopping-bag" placeholder="Quantidade de parcelas..." required={true} mask="only-numbers"/>
 						<Separator style={{height: 30}}/>
