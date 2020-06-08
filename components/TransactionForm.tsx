@@ -76,7 +76,9 @@ function TransactionForm(props) {
 	}
 
 	async function submit(transaction: InvoiceItem, {reset}) {
-		alert(`${JSON.stringify(transaction)}`);
+		if (props.creditCard) {
+			creditCardDomain.saveTransaction(props.creditCard.id, transaction);
+		}
 		reset();
 	}
 

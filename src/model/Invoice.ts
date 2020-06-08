@@ -24,6 +24,11 @@ class Invoice {
 		}
 	};
 
+	addTransaction(transaction: InvoiceItem) {
+		transaction.invoiceId = this.id;
+		this.invoiceItems.push(transaction);
+	}
+
 	static fromRealmObject(object: Realm.Object): Invoice {
 		const invoice = new Invoice();
 		invoice.id = object['id'];
