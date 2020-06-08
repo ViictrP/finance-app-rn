@@ -8,6 +8,7 @@ import Invoice from "../model/Invoice";
 import moment from 'moment';
 import Constants from "../../constants/Constants";
 import {DECEMBER, JANUARY, MONTHS} from "../../components/utils/calendar/CalendarMonth";
+import console from 'reactotron-react-native';
 
 type Transactions = Array<InvoiceItem>;
 
@@ -60,6 +61,7 @@ class CreditCardDomain {
 		const value = transaction.value / transaction.parcelAmount;
 		let isDecember = false;
 		for (let i = 0; i < transaction.parcelNumber; i++) {
+			console.log(i);
 			year = isDecember ? year + 1 : year;
 			isDecember = false;
 			month = i > 0 ? month + 1 : month;
@@ -102,6 +104,7 @@ class CreditCardDomain {
 				invoice = this.generateInvoice(card, date);
 			}
 		}
+		console.log(invoice);
 		invoice.addTransaction(transaction);
 		transactionService.save(transaction);
 	}

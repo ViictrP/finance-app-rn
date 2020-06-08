@@ -8,7 +8,7 @@ class Invoice {
 	public creditCardId?: number;
 	public month: number;
 	public year: number;
-	public invoiceItems: Array<InvoiceItem>;
+	public invoiceItems: Array<InvoiceItem> = [];
 
 	static schema: Realm.ObjectSchema = {
 		name: 'invoice',

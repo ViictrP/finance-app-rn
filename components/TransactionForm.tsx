@@ -77,6 +77,7 @@ function TransactionForm(props) {
 
 	async function submit(transaction: InvoiceItem, {reset}) {
 		if (props.creditCard) {
+			//todo corrigir dados faltando (parcelAmout)
 			creditCardDomain.saveTransaction(props.creditCard.id, transaction);
 		}
 		reset();
