@@ -26,6 +26,8 @@ function Transactions(props) {
 
 	useEffect(toggleTransactionScreen, [props.action]);
 
+	useEffect(loadTransactions, [invoice]);
+
 	useEffect(() => {
 		setTransactions([
 			new InvoiceItem(1, 'Apple Inc.', 'Loja', new Date(), 27699.99, 'shopping-cart'),
@@ -36,6 +38,7 @@ function Transactions(props) {
 
 	function toggleTransactionScreen() {
 		if (props.action === 'openTransactions') {
+			setInvoice(props.invoice);
 			Animated.spring(state.top, {
 				useNativeDriver: false,
 				toValue: 54,
@@ -44,6 +47,7 @@ function Transactions(props) {
 		}
 
 		if (props.action === 'closeTransactions') {
+			setInvoice(null);
 			Animated.timing(state.top, {
 				useNativeDriver: false,
 				toValue: screenHeight,
@@ -52,6 +56,11 @@ function Transactions(props) {
 			// setTransactions([]);
 			// setInvoice([]);
 		}
+	}
+
+	function loadTransactions() {
+		//TODO carregar as transações
+		console.log(JSON.stringify(invoice));
 	}
 
 	return (

@@ -36,6 +36,10 @@ class CreditCardDomain {
 		return invoice;
 	}
 
+	public getInvoice(creditCardId: number, month: number, year: number): Invoice {
+		return invoiceService.findByCreditCardMonthAndYear(creditCardId, month, year);
+	}
+
 	public findByUser(userId: number): Array<CreditCard> {
 		return cardService.findByUser(userId);
 	}

@@ -32,6 +32,9 @@ function CardsScreen(props) {
 	const [scale, setScale] = useState(new Animated.Value(1));
 	const [opacity, setOpacity] = useState(new Animated.Value(1));
 	const [transactions, setTransactions] = useState(new Array<InvoiceItem>());
+	const [invoice, setInvoice] = useState(null);
+	const [month, setMonth] = useState(null);
+	const [year, setYear] = useState(null);
 
 	useEffect(toggleScale, [props.action]);
 
@@ -48,6 +51,7 @@ function CardsScreen(props) {
 	}
 
 	function openTransactions() {
+		if (card && month && year) setInvoice(domain.getInvoice(card.id, month, year));
 		Animated.timing(scale, {
 			useNativeDriver: false,
 			toValue: 0.9,
@@ -150,12 +154,16 @@ function CardsScreen(props) {
 		if (card) {
 			const monthId = MONTHS[index].calendarIndex;
 			console.log(`${monthId}/${year}`);
+			setMonth(monthId);
+			setYear(year);
 			setTransactions(domain.getTransactions(card.id, monthId, year, 10));
 		}
 	}
 
 	function reloadCreditCardInfos() {
 		if(card) {
+			//TODO corrigir calendar não atualizando com a mudança de cartões
+			//TODO setMonth pode ajudar
 			const today = new Date();
 			const month = MONTHS[moment(today).get('month')];
 			const year = moment(today).get('year');
@@ -175,7 +183,7 @@ function CardsScreen(props) {
 
 	return (
 		<RootView>
-			<Transactions/>
+			<Transactions invoice={invoice}/>
 			<CreditCardForm onClose={reload}/>
 			<TransactionForm creditCard={card} onClose={reload}/>
 			<Animated.View style={{
@@ -284,7 +292,7 @@ function CardsScreen(props) {
 									<TransactionItem
 										title={item.title}
 										description={item.description}
-										icon={item.icon}
+										icon={item.icon ? item.icon : 'shopping-cart'}
 										value={item.value}
 										when={moment(item.when).format('LL')}
 									/>

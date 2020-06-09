@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {dispatchToPropsClose, mapStateToProps} from './utils/redux/ReduxMaps';
 
 import styled from 'styled-components';
-import {Animated, Button, Dimensions, Easing, TouchableOpacity, View, StyleSheet} from "react-native";
+import {Animated, Button, Dimensions, Easing, StyleSheet, TouchableOpacity, View} from "react-native";
 import {Form} from '@unform/mobile';
 import {ProductSansBoldText, ProductSansText} from './StyledText';
 import Icon from 'react-native-vector-icons/Feather';
@@ -13,7 +13,6 @@ import Separator from './Separator';
 import Layout from '../constants/Layout';
 import creditCardDomain from '../src/domain/CreditCardDomain';
 import CreditCardComponent from './CreditCard';
-import CreditCard from '../src/model/CreditCard';
 import * as Yup from 'yup';
 import console from 'reactotron-react-native';
 import DatePicker from "./DatePicker";
