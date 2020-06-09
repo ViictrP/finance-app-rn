@@ -7,7 +7,7 @@ import InvoiceItem from "../model/InvoiceItem";
 import Invoice from "../model/Invoice";
 import moment from 'moment';
 import Constants from "../../constants/Constants";
-import {DECEMBER, JANUARY, MONTHS} from "../../components/utils/calendar/CalendarMonth";
+import {DECEMBER, MONTHS} from "../../components/utils/calendar/CalendarMonth";
 import console from 'reactotron-react-native';
 
 type Transactions = Array<InvoiceItem>;
@@ -72,10 +72,8 @@ class CreditCardDomain {
 
 	private saveParcelTransaction(transaction: InvoiceItem, creditCardID: number, month: number, year: number) {
 		const value = transaction.value / transaction.parcelAmount;
-		let isNewYear = false;
 		for (let i = 1; i <= transaction.parcelAmount; i++) {
 			console.log(`Gerando parcela de número ${i}`);
-			isNewYear = false;
 			month = i > 1 ? MONTHS[month - 1].next : month;
 			console.log(`Verificando ano novo ${month} 12=${MONTHS[month - 1].previous}:${DECEMBER.calendarIndex === MONTHS[month - 1].previous}`);
 			if (DECEMBER.calendarIndex === MONTHS[month - 1].previous) year += 1;
