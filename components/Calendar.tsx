@@ -10,32 +10,32 @@ import moment from 'moment';
 import console from 'reactotron-react-native';
 
 export default function Calendar(props) {
-	const [month, setMonth] = useState(MONTHS[moment(new Date()).get('month')]);
-	const [year, setYear] = useState(moment(new Date()).get('year'));
+	const [month, setMonth] = useState(MONTHS[moment(new Date()).month()]);
+	const [year, setYear] = useState(moment(new Date()).year());
 	const [scale, setScale] = useState(new Animated.Value(1));
 
 	function previewsMonth() {
-		const previousMonth = MONTHS[month.previous];
+		const previousMonth = MONTHS[month.previous - 1];
 		setMonth(previousMonth);
 		let previousYear = year;
-		if (previousMonth.index === DECEMBER.index) {
+		if (previousMonth.calendarIndex === DECEMBER.calendarIndex) {
 			previousYear -= 1;
 			setYear(previousYear);
 		}
 		animateMonth();
-		props.onMonthChange(month.previous, previousYear);
+		props.onMonthChange(previousMonth.arrayIndex, previousYear);
 	}
 
 	function nextMonth() {
-		const nextMonth = MONTHS[month.next];
+		const nextMonth = MONTHS[month.next - 1];
 		setMonth(nextMonth);
 		let nextYear = year;
-		if (nextMonth.index === JANUARY.index) {
+		if (nextMonth.calendarIndex === JANUARY.calendarIndex) {
 			nextYear += 1;
 			setYear(nextYear);
 		}
 		animateMonth();
-		props.onMonthChange(nextMonth.index, nextYear);
+		props.onMonthChange(nextMonth.arrayIndex, nextYear);
 	}
 
 	function animateMonth() {

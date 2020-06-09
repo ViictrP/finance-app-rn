@@ -148,8 +148,8 @@ function CardsScreen(props) {
 
 	function onMonthChanged(index, year) {
 		if (card) {
-			console.log(`${index}/${year}`);
-			const monthId = MONTHS[index].index;
+			const monthId = MONTHS[index].calendarIndex;
+			console.log(`${monthId}/${year}`);
 			setTransactions(domain.getTransactions(card.id, monthId, year, 10));
 		}
 	}
@@ -159,7 +159,7 @@ function CardsScreen(props) {
 			const today = new Date();
 			const month = MONTHS[moment(today).get('month')];
 			const year = moment(today).get('year');
-			setTransactions(domain.getTransactions(card.id, month.index, year, 10));
+			setTransactions(domain.getTransactions(card.id, month.calendarIndex, year, 10));
 			setPercentage(
 				100 - (card.availableLimit * 100) / card.limit
 			);

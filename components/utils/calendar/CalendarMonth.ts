@@ -1,5 +1,6 @@
 export type CalendarMonth = {
-	index: number;
+	calendarIndex: number;
+	arrayIndex: number;
 	previous: number;
 	next: number;
 	internacional: {
@@ -11,9 +12,10 @@ export type CalendarMonth = {
 export type CalendarMonths = Array<CalendarMonth>;
 
 export const JANUARY: CalendarMonth = {
-	index: 0,
-	previous: 11,
-	next: 1,
+	calendarIndex: 1,
+	arrayIndex: 0,
+	previous: 12,
+	next: 2,
 	internacional: {
 		ptBr: 'Janeiro',
 		enUS: 'January'
@@ -21,9 +23,10 @@ export const JANUARY: CalendarMonth = {
 };
 
 export const FEBRUARY: CalendarMonth = {
-	index: 1,
-	previous: 0,
-	next: 2,
+	calendarIndex: 2,
+	arrayIndex: 1,
+	previous: 1,
+	next: 3,
 	internacional: {
 		ptBr: 'Fevereiro',
 		enUS: 'February'
@@ -31,9 +34,10 @@ export const FEBRUARY: CalendarMonth = {
 };
 
 export const MARCH: CalendarMonth = {
-	index: 2,
-	previous: 1,
-	next: 3,
+	calendarIndex: 3,
+	previous: 2,
+	arrayIndex: 2,
+	next: 4,
 	internacional: {
 		ptBr: 'Março',
 		enUS: 'March'
@@ -41,9 +45,10 @@ export const MARCH: CalendarMonth = {
 };
 
 export const APRIL: CalendarMonth = {
-	index: 3,
-	previous: 2,
-	next: 4,
+	calendarIndex: 4,
+	previous: 3,
+	arrayIndex: 3,
+	next: 5,
 	internacional: {
 		ptBr: 'Abril',
 		enUS: 'April'
@@ -51,9 +56,10 @@ export const APRIL: CalendarMonth = {
 };
 
 export const MAY: CalendarMonth = {
-	index: 4,
-	previous: 3,
-	next: 5,
+	calendarIndex: 5,
+	previous: 4,
+	arrayIndex: 4,
+	next: 6,
 	internacional: {
 		ptBr: 'Maio',
 		enUS: 'May'
@@ -61,9 +67,10 @@ export const MAY: CalendarMonth = {
 };
 
 export const JUNE: CalendarMonth = {
-	index: 5,
-	previous: 4,
-	next: 6,
+	calendarIndex: 6,
+	previous: 5,
+	arrayIndex: 5,
+	next: 7,
 	internacional: {
 		ptBr: 'Junho',
 		enUS: 'June'
@@ -71,9 +78,10 @@ export const JUNE: CalendarMonth = {
 };
 
 export const JULY: CalendarMonth = {
-	index: 6,
-	previous: 5,
-	next: 7,
+	calendarIndex: 7,
+	previous: 6,
+	arrayIndex: 6,
+	next: 8,
 	internacional: {
 		ptBr: 'Julho',
 		enUS: 'July'
@@ -81,9 +89,10 @@ export const JULY: CalendarMonth = {
 };
 
 export const AUGUST: CalendarMonth = {
-	index: 7,
-	previous: 6,
-	next: 8,
+	calendarIndex: 8,
+	previous: 7,
+	arrayIndex: 7,
+	next: 9,
 	internacional: {
 		ptBr: 'Agosto',
 		enUS: 'August'
@@ -91,9 +100,10 @@ export const AUGUST: CalendarMonth = {
 };
 
 export const SEPTEMBER: CalendarMonth = {
-	index: 8,
-	previous: 7,
-	next: 9,
+	calendarIndex: 9,
+	previous: 8,
+	arrayIndex: 8,
+	next: 10,
 	internacional: {
 		ptBr: 'Setembro',
 		enUS: 'September'
@@ -101,9 +111,10 @@ export const SEPTEMBER: CalendarMonth = {
 };
 
 export const OCTOBER: CalendarMonth = {
-	index: 9,
-	previous: 8,
-	next: 10,
+	calendarIndex: 10,
+	previous: 9,
+	arrayIndex: 9,
+	next: 11,
 	internacional: {
 		ptBr: 'Outubro',
 		enUS: 'Outubro'
@@ -111,9 +122,10 @@ export const OCTOBER: CalendarMonth = {
 };
 
 export const NOVEMBER: CalendarMonth = {
-	index: 10,
-	previous: 9,
-	next: 11,
+	calendarIndex: 11,
+	previous: 10,
+	arrayIndex: 10,
+	next: 12,
 	internacional: {
 		ptBr: 'Novembro',
 		enUS: 'November'
@@ -121,9 +133,10 @@ export const NOVEMBER: CalendarMonth = {
 };
 
 export const DECEMBER: CalendarMonth = {
-	index: 11,
-	previous: 10,
-	next: 0,
+	calendarIndex: 12,
+	previous: 11,
+	arrayIndex: 11,
+	next: 1,
 	internacional: {
 		ptBr: 'Dezembro',
 		enUS: 'December'
