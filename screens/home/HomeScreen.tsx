@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Animated, Button, FlatList, Platform, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {Animated, Button, FlatList, Platform, SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
 import Transactions from "../../components/Transactions";
 import Colors from "../../constants/Colors";
 import {ContentContainer, RootView} from "../cards/Style";
@@ -30,7 +30,7 @@ export default function HomeScreen() {
 			}}
 			>
 				<SafeAreaView>
-					<Container>
+					<ScrollView>
 						<SearchView>
 							<View style={{alignItems: "flex-start"}}>
 								<ProductSansBoldText
@@ -129,7 +129,7 @@ export default function HomeScreen() {
 								</ContentContainer>
 							</View>
 						</ViewContainer>
-					</Container>
+					</ScrollView>
 				</SafeAreaView>
 			</Animated.View>
 		</RootView>
