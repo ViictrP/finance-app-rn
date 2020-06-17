@@ -4,7 +4,6 @@ import CreditCardCarousel from '../../components/CreditCardCarousel';
 import {ContentContainer, IndicatorSquare, RootView, Square} from './Style';
 import {ProductSansBoldText, ProductSansText} from '../../components/StyledText';
 import Layout from '../../constants/Layout';
-import CreditCard from '../../src/model/CreditCard';
 import ProgressBar from "../../components/ProgressBar";
 import Separator from "../../components/Separator";
 import Icon from 'react-native-vector-icons/Feather';
@@ -151,23 +150,21 @@ function CardsScreen(props) {
 	}
 
 	function onMonthChanged(index, year) {
+		const monthId = MONTHS[index].calendarIndex;
+		console.log(`${monthId}/${year}`);
+		setMonth(monthId);
+		setYear(year);
 		if (card) {
-			const monthId = MONTHS[index].calendarIndex;
-			console.log(`${monthId}/${year}`);
-			setMonth(monthId);
-			setYear(year);
 			setTransactions(domain.getTransactions(card.id, monthId, year, 10));
 		}
 	}
 
 	function reloadCreditCardInfos() {
 		if(card) {
-			//TODO corrigir calendar não atualizando com a mudança de cartões
-			//TODO setMonth pode ajudar
 			const today = new Date();
-			const month = MONTHS[moment(today).get('month')];
-			const year = moment(today).get('year');
-			setTransactions(domain.getTransactions(card.id, month.calendarIndex, year, 10));
+			const selectedMonth = MONTHS[month ? month : moment(today).get('month')];
+			const selectedyear = year ? year : moment(today).get('year');
+			setTransactions(domain.getTransactions(card.id, selectedMonth.arrayIndex, selectedyear, 10));
 			setPercentage(
 				100 - (card.availableLimit * 100) / card.limit
 			);

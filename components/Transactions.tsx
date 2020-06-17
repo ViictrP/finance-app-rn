@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import styled from 'styled-components';
-import {Animated, Button, Dimensions, FlatList, TouchableOpacity, View} from 'react-native';
+import {Animated, Dimensions, FlatList, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {ProductSansBoldText, ProductSansText} from "./StyledText";
 import {connect} from 'react-redux';
@@ -14,6 +14,7 @@ import CreditCard from "./CreditCard";
 import InvoiceItem from "../src/model/InvoiceItem";
 import moment from 'moment';
 import console from 'reactotron-react-native';
+import service from '../src/services/TransactionService';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -27,14 +28,6 @@ function Transactions(props) {
 	useEffect(toggleTransactionScreen, [props.action]);
 
 	useEffect(loadTransactions, [invoice]);
-
-	useEffect(() => {
-		setTransactions([
-			new InvoiceItem(1, 'Apple Inc.', 'Loja', new Date(), 27699.99, 'shopping-cart'),
-			new InvoiceItem(2, 'Facebook Inc.', 'Online', new Date(), 99.99, 'shopping-cart'),
-			new InvoiceItem(3, 'Google Inc.', 'Online', new Date(), 7699.99, 'shopping-cart')
-		]);
-	}, []);
 
 	function toggleTransactionScreen() {
 		if (props.action === 'openTransactions') {
@@ -59,8 +52,10 @@ function Transactions(props) {
 	}
 
 	function loadTransactions() {
-		//TODO carregar as transações
-		console.log(JSON.stringify(invoice));
+		if (invoice) {
+			const transactions = service.findByInvoice(invoice.id);
+			setTransactions(transactions);
+		}
 	}
 
 	return (
@@ -111,6 +106,7 @@ function Transactions(props) {
 						/>
 					}
 				/>
+				<Separator style={{height: 100}} />
 			</Content>
 		</Animated.ScrollView>
 	);

@@ -13,6 +13,13 @@ class TransactionService {
 		transaction.id = id ? Number(id) + 1 : Constants.ONE;
 		realm.write(() => realm.create(SCHEMA, transaction, UpdateMode.Modified));
 	}
+
+	findByInvoice(id: number): InvoiceItem[] {
+		const realm = getRealm();
+		return realm.objects(SCHEMA)
+			.filtered(`invoiceId == ${id}`)
+			.map(InvoiceItem.fromRealmObject);
+	}
 }
 
 export default new TransactionService();
