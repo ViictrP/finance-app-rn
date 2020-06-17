@@ -13,7 +13,6 @@ import Separator from "./Separator";
 import CreditCard from "./CreditCard";
 import InvoiceItem from "../src/model/InvoiceItem";
 import moment from 'moment';
-import console from 'reactotron-react-native';
 import service from '../src/services/TransactionService';
 
 const screenHeight = Dimensions.get('window').height;
@@ -46,8 +45,6 @@ function Transactions(props) {
 				toValue: screenHeight,
 				duration: 300,
 			}).start(props.onClose);
-			// setTransactions([]);
-			// setInvoice([]);
 		}
 	}
 
