@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Animated, FlatList, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, View, YellowBox} from 'react-native';
+import {
+	Animated,
+	Button,
+	FlatList,
+	SafeAreaView,
+	ScrollView,
+	StatusBar,
+	TouchableOpacity,
+	View,
+	YellowBox
+} from 'react-native';
 import CreditCardCarousel from '../../components/CreditCardCarousel';
 import {ContentContainer, IndicatorSquare, RootView, Square} from './Style';
 import {ProductSansBoldText, ProductSansText} from '../../components/StyledText';
@@ -205,9 +215,7 @@ function CardsScreen(props) {
 							<ProductSansBoldText style={{fontSize: Layout.TITLE_FONT_SIZE}}>
 								Seus cartões
 							</ProductSansBoldText>
-							<TouchableOpacity onPress={props.openCardForm}>
-								<ProductSansText>Add novo</ProductSansText>
-							</TouchableOpacity>
+							<Button title="add novo" onPress={props.openCardForm} />
 						</ContentContainer>
 						<CreditCardCarousel cards={cards} onSnapToItem={creditCardChanged}/>
 						<Separator style={{height: 20}}/>
@@ -273,12 +281,8 @@ function CardsScreen(props) {
 									}}>Transações</ProductSansBoldText>
 								<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
 									<Separator style={{width: 10}}/>
-									<TouchableOpacity onPress={props.openTransactionsForm}>
-										<ProductSansText>Add</ProductSansText>
-									</TouchableOpacity>
-									<TouchableOpacity onPress={props.openTransactions}>
-										<ProductSansText>Ver todas</ProductSansText>
-									</TouchableOpacity>
+									<Button title="add" onPress={props.openTransactionsForm} />
+									<Button title="ver todas" onPress={props.openTransactions} />
 								</View>
 							</View>
 							<Separator style={{height: 30}}/>

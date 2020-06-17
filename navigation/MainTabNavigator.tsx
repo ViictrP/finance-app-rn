@@ -5,8 +5,8 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/home/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import LinksScreen from '../screens/links/LinksScreen';
+import SettingsScreen from '../screens/settings/SettingsScreen';
 import CardsScreen from '../screens/cards/CardsScreen';
 import {CreateNavigatorConfig} from "react-navigation";
 
@@ -29,11 +29,7 @@ HomeStack.navigationOptions = {
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
-			name={
-				Platform.OS === 'ios'
-					? `ios-information-circle${focused ? '' : '-outline'}`
-					: 'md-information-circle'
-			}
+			name="home"
 		/>
 	),
 };
@@ -59,11 +55,7 @@ CardsStack.navigationOptions = ({navigation}) => ({
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
-			name={
-				Platform.OS === 'ios'
-					? `ios-information-circle${focused ? '' : '-outline'}`
-					: 'md-information-circle'
-			}
+			name="credit-card"
 		/>
 	),
 	tabBarVisible: isTabBarVisible(navigation.state)
@@ -81,7 +73,7 @@ const LinksStack = createStackNavigator(
 LinksStack.navigationOptions = {
 	tabBarLabel: 'Links',
 	tabBarIcon: ({focused}) => (
-		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}/>
+		<TabBarIcon focused={focused} name="home"/>
 	),
 };
 
@@ -97,15 +89,15 @@ const SettingsStack = createStackNavigator(
 SettingsStack.navigationOptions = {
 	tabBarLabel: 'Settings',
 	tabBarIcon: ({focused}) => (
-		<TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}/>
+		<TabBarIcon focused={focused} name="home"/>
 	),
 };
 
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-	CardsStack,
 	HomeStack,
+	CardsStack,
 	LinksStack,
 	SettingsStack,
 });
