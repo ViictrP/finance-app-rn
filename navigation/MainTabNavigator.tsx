@@ -4,11 +4,12 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/home/HomeScreen';
+import WalletScreen from '../screens/wallet/WalletScreen';
 import LinksScreen from '../screens/links/LinksScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 import CardsScreen from '../screens/cards/CardsScreen';
 import {CreateNavigatorConfig} from "react-navigation";
+import SearchTransactionScreen from "../screens/search-transactions/SearchTransactionsScreen";
 
 const stackConfing: CreateNavigatorConfig<any, any, any, any> = {headerMode: 'none'};
 
@@ -17,24 +18,25 @@ const config = Platform.select({
 	default: stackConfing,
 });
 
-const HomeStack = createStackNavigator(
+const WalletStack = createStackNavigator(
 	{
-		Home: HomeScreen,
+		Wallet: WalletScreen,
+		SearchTransactions: SearchTransactionScreen
 	},
 	config
 );
 
-HomeStack.navigationOptions = {
-	tabBarLabel: 'Home',
+WalletStack.navigationOptions = {
+	tabBarLabel: 'Carteira',
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon
 			focused={focused}
-			name="home"
+			name="wallet"
 		/>
 	),
 };
 
-HomeStack.path = '';
+WalletStack.path = '';
 
 const isTabBarVisible = (navState) => {
 	if (!navState) {
@@ -96,7 +98,7 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-	HomeStack,
+	WalletStack,
 	CardsStack,
 	LinksStack,
 	SettingsStack,

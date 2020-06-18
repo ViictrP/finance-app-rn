@@ -1,15 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-	Animated,
-	Button,
-	FlatList,
-	SafeAreaView,
-	ScrollView,
-	StatusBar,
-	TouchableOpacity,
-	View,
-	YellowBox
-} from 'react-native';
+import {Animated, Button, FlatList, SafeAreaView, ScrollView, StatusBar, View, YellowBox} from 'react-native';
 import CreditCardCarousel from '../../components/CreditCardCarousel';
 import {ContentContainer, IndicatorSquare, RootView, Square} from './Style';
 import {ProductSansBoldText, ProductSansText} from '../../components/StyledText';
@@ -151,7 +141,9 @@ function CardsScreen(props) {
 			'openTransactions': () => openTransactions(),
 			'closeTransactions': () => closeTransactions(),
 			'openTransactionsForm': () => openTransactionsForm(),
-			'closeTransactionsForm': () => closeTransactionsForm()
+			'closeTransactionsForm': () => closeTransactionsForm(),
+			'openWallet': () => {},
+			'closeWallet': () => {},
 		}[action]();
 	}
 

@@ -29,6 +29,10 @@ const reducer = (state: IGlobalState = initialState, action: IReduxAction): IGlo
 			return {action: 'openTransactionsForm'};
 		case 'CLOSE_TRANSACTIONS_FORM':
 			return {action: 'closeTransactionsForm'};
+		case 'OPEN_WALLET':
+			return {action: 'openWallet'};
+		case 'CLOSE_WALLET':
+			return {action: 'closeWallet'};
 		default:
 			return state;
 	}

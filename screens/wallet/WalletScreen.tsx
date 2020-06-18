@@ -1,9 +1,19 @@
-import React, {useState} from 'react';
-import {Animated, Button, FlatList, Platform, SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+	Animated,
+	Button,
+	FlatList,
+	Platform,
+	SafeAreaView,
+	ScrollView,
+	StatusBar,
+	TouchableOpacity,
+	View
+} from 'react-native';
 import Transactions from "../../components/Transactions";
 import Colors from "../../constants/Colors";
 import {ContentContainer, RootView} from "../cards/Style";
-import {Container, MoneyBox, SearchBox, SearchView, ViewContainer} from './Style';
+import {MoneyBox, SearchBox, SearchView, ViewContainer} from './Style';
 import {ProductSansBoldText, ProductSansText} from "../../components/StyledText";
 import makeElevation from "../../components/utils/ElevationShadowStyle";
 import Layout from "../../constants/Layout";
@@ -11,15 +21,66 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Separator from "../../components/Separator";
 import TransactionItem from "../../components/TransactionItem";
 import moment from "moment";
+import {connect} from "react-redux";
+import {dispatchToPropsOpen, mapStateToProps} from "../../components/utils/redux/ReduxMaps";
+import Wallet from "../../components/Wallet";
+import TransactionForm from "../../components/TransactionForm";
 
-export default function HomeScreen() {
+function WalletScreen(props) {
+
+	const {navigation} = props;
 
 	const [scale, setScale] = useState(new Animated.Value(1));
 	const [opacity, setOpacity] = useState(new Animated.Value(1));
 
+	useEffect(() => executeAction(props.action), [props.action]);
+
+	function openModal() {
+		Animated.timing(scale, {
+			useNativeDriver: false,
+			toValue: 0.9,
+			duration: 150
+		}).start();
+
+		Animated.spring(opacity, {
+			useNativeDriver: false,
+			toValue: 0.5,
+		}).start();
+		StatusBar.setBarStyle('light-content', true);
+	}
+
+	function closeModal() {
+		Animated.timing(scale, {
+			useNativeDriver: false,
+			toValue: 1,
+			duration: 150
+		}).start();
+
+		Animated.spring(opacity, {
+			useNativeDriver: false,
+			toValue: 1
+		}).start();
+		StatusBar.setBarStyle('dark-content', true);
+	}
+
+	function executeAction(action: string): any {
+		return {
+			'openCardForm': () => {},
+			'closeCardForm': () => {},
+			'openWallet': () => openModal(),
+			'closeWallet': () => closeModal(),
+			'openTransactions': () => openModal(),
+			'closeTransactions': () => closeModal(),
+			'openTransactionsForm': () => openModal(),
+			'closeTransactionsForm': () => closeModal()
+		}[action]();
+	}
+
 	return (
 		<RootView>
 			<Transactions/>
+			<TransactionForm />
+			<Wallet />
 			<Animated.View style={{
 				flex: 1,
 				transform: [{scale: scale}],
@@ -43,7 +104,7 @@ export default function HomeScreen() {
 								<ProductSansText style={{fontSize: 17, marginTop: 10}}>Buscar transações por nome, valor
 									ou categoria</ProductSansText>
 							</View>
-							<TouchableOpacity style={{marginTop: 25}} onPress={() => {}}>
+							<TouchableOpacity style={{marginTop: 25}} onPress={() => navigation.navigate('SearchTransactions')}>
 								<SearchBox>
 									<FontAwesome5
 										name="search"
@@ -64,9 +125,7 @@ export default function HomeScreen() {
 								<ContentContainer>
 									<View style={{justifyContent: 'space-between', flexDirection: 'row', marginBottom: 30, padding: 10}}>
 										<ProductSansBoldText style={{fontSize: Layout.TITLE_FONT_SIZE}}>Carteira</ProductSansBoldText>
-										<TouchableOpacity>
-											<Button title="editar saldo" onPress={() => {}}/>
-										</TouchableOpacity>
+										<Button title="configurar" onPress={props.openWallet} />
 									</View>
 									<MoneyBox>
 										<View>
@@ -90,8 +149,8 @@ export default function HomeScreen() {
 												}}>Transações</ProductSansBoldText>
 											<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
 												<Separator style={{width: 10}}/>
-												<Button title="add" onPress={() => {}} />
-												<Button title="ver todas" onPress={() => {}} />
+												<Button title="add" onPress={props.openTransactionsForm} />
+												<Button title="ver todas" onPress={props.openTransactions} />
 											</View>
 										</View>
 										<Separator style={{height: 30}}/>
@@ -136,6 +195,8 @@ export default function HomeScreen() {
 	);
 }
 
-HomeScreen.navigationOptions = {
+export default connect(mapStateToProps, dispatchToPropsOpen)(WalletScreen);
+
+WalletScreen.navigationOptions = {
 	header: null,
 };

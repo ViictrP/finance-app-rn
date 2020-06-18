@@ -99,7 +99,7 @@ class CreditCardDomain {
 		let nextMonth = month;
 		let nextYear = year;
 		if (day > card.closeDay) {
-			console.log(`Transação realizada com fatura aberta. Dia ${day}, Mês ${nextMonth}`);
+			console.log(`Transação realizada com fatura fechada. Dia ${day}, Mês ${nextMonth}`);
 			nextMonth = MONTHS[month - 1].next;
 			if (DECEMBER.calendarIndex === month) {
 				nextYear += 1;
