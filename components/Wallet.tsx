@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import styled from 'styled-components';
-import {Animated, Dimensions, TouchableOpacity} from 'react-native';
+import {Animated, Button, Dimensions, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {ProductSansBoldText, ProductSansText} from "./StyledText";
 import {connect} from 'react-redux';
@@ -10,10 +10,15 @@ import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import Separator from "./Separator";
 import console from 'reactotron-react-native';
+import Input from "./Input";
+import DatePicker from "./DatePicker";
+import {Form} from "@unform/mobile";
 
 const screenHeight = Dimensions.get('window').height;
 
 function Wallet(props) {
+	const formRef = useRef(null);
+	const [hasError, setHasError] = useState(true);
 	const [state, setState] = useState({
 		top: new Animated.Value(screenHeight)
 	});
@@ -37,6 +42,10 @@ function Wallet(props) {
 				duration: 300,
 			}).start(props.onClose);
 		}
+	}
+
+	function submit(obj) {
+		console.log(obj);
 	}
 
 	return (
@@ -66,7 +75,17 @@ function Wallet(props) {
 					gerenciar saldo da carteira.
 				</ProductSansText>
 			</Header>
-			<Content />
+			<Content>
+				<Form ref={formRef} onSubmit={submit}>
+					<View style={{flex: 1, flexDirection: 'column'}}>
+						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money"/>
+						<Button
+							title="Cadastrar"
+							onPress={() => formRef.current.submitForm()}
+						/>
+					</View>
+				</Form>
+			</Content>
 		</Animated.ScrollView>
 	);
 }

@@ -73,9 +73,9 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-	tabBarLabel: 'Links',
+	tabBarLabel: 'Buscar',
 	tabBarIcon: ({focused}) => (
-		<TabBarIcon focused={focused} name="home"/>
+		<TabBarIcon focused={focused} name="search"/>
 	),
 };
 
@@ -89,9 +89,9 @@ const SettingsStack = createStackNavigator(
 );
 
 SettingsStack.navigationOptions = {
-	tabBarLabel: 'Settings',
+	tabBarLabel: 'Ajustes',
 	tabBarIcon: ({focused}) => (
-		<TabBarIcon focused={focused} name="home"/>
+		<TabBarIcon focused={focused} name="cog"/>
 	),
 };
 
