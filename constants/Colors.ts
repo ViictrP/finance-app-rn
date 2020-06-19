@@ -19,5 +19,6 @@ export default {
     TEXT_INVERTED: '#FFF',
     TEXT_ACCENT: '#f30016',
     FADDED_TEXT: '#939393',
-    SEPARATOR: '#E2E2E2'
+    SEPARATOR: '#E2E2E2',
+    FADDED: 'rgba(238,238,238,0.58)'
 };

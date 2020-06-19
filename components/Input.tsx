@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useField} from '@unform/core';
-import {StyleSheet, Text, View} from "react-native";
+import {View} from "react-native";
 import styled from 'styled-components';
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
@@ -10,7 +10,7 @@ import {TextInputMask} from 'react-native-masked-text'
 import {ProductSansText} from "./StyledText";
 import Separator from "./Separator";
 
-function Input({name, icon, placeholder, required, mask}) {
+function Input({name, icon, placeholder, required, mask, style}) {
 	const [value, setValue] = useState("");
 	const inputRef = useRef(null);
 	const {fieldName, registerField, defaultValue, error} = useField(name);
@@ -43,13 +43,13 @@ function Input({name, icon, placeholder, required, mask}) {
 
 	function MaskInput() {
 		return (
-			<Container>
-				<ChildContainer>
-					<FeatherIcon
+			<Container style={style.container}>
+				<ChildContainer style={style.childContainer}>
+					{icon ? <FeatherIcon
 						name={icon}
 						size={28}
 						color={required && required == true ? Colors.TINT_COLOR : Colors.FADDED_TEXT}
-					/>
+					/> : <View />}
 					<TextInputMask
 						type={mask}
 						style={style.input}
@@ -80,13 +80,15 @@ function Input({name, icon, placeholder, required, mask}) {
 
 	function NormalInput() {
 		return (
-			<Container>
-				<ChildContainer>
-					<FeatherIcon
-						name={icon}
-						size={28}
-						color={required && required == true ? Colors.TINT_COLOR : Colors.FADDED_TEXT}
-					/>
+			<Container style={style.container}>
+				<ChildContainer style={style.childContainer}>
+					{
+						icon ? <FeatherIcon
+							name={icon}
+							size={28}
+							color={required && required == true ? Colors.TINT_COLOR : Colors.FADDED_TEXT}
+						/> : <View />
+					}
 					<InputText
 						ref={inputRef}
 						required={required}
@@ -118,16 +120,6 @@ function Input({name, icon, placeholder, required, mask}) {
 		return NormalInput();
 	}
 }
-
-const style = StyleSheet.create({
-	input: {
-		fontSize: 20,
-		color: Colors.TEXT_PRIMARY,
-		width: '100%',
-		height: '100%',
-		paddingLeft: 10
-	}
-});
 
 const InputText = styled.TextInput`
 	font-size: 20px;

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 
 import styled from 'styled-components';
-import {Animated, Button, Dimensions, TouchableOpacity, View} from 'react-native';
+import {Animated, Button, Dimensions, Platform, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {ProductSansBoldText, ProductSansText} from "./StyledText";
 import {connect} from 'react-redux';
@@ -11,8 +11,8 @@ import Layout from "../constants/Layout";
 import Separator from "./Separator";
 import console from 'reactotron-react-native';
 import Input from "./Input";
-import DatePicker from "./DatePicker";
 import {Form} from "@unform/mobile";
+import makeElevation from "./utils/ElevationShadowStyle";
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -78,7 +78,8 @@ function Wallet(props) {
 			<Content>
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
-						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money"/>
+						<Input name="value" icon="" placeholder="Valor..." required={true} mask="money" style={inputStyle}/>
+						<Separator style={{height: 40}} />
 						<Button
 							title="Cadastrar"
 							onPress={() => formRef.current.submitForm()}
@@ -91,6 +92,27 @@ function Wallet(props) {
 }
 
 export default connect(mapStateToProps, dispatchToPropsClose)(Wallet);
+
+const inputStyle = {
+	container: {
+		marginLeft: 0,
+		marginRight: 0,
+		maxHeigth: 100
+	},
+	childContainer: {
+		borderWidth: 0,
+		paddingTop: 15,
+		paddingBottom: 15,
+		backgroundColor: Colors.FADDED,
+	},
+	input: {
+		fontSize: 40,
+		color: Colors.TEXT_PRIMARY,
+		width: '100%',
+		height: '100%',
+		paddingLeft: 10
+	}
+};
 
 const Header = styled.View`
 	height: 110px;

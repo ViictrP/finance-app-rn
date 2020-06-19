@@ -128,15 +128,15 @@ function CreditCardForm(props) {
 			<Content>
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
-						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask="" />
+						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask="" style={inputStyle} />
 						<Separator style={{height: 20}} />
-						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} mask="only-numbers" />
+						<Input name="closeDay" icon="calendar" placeholder="Dia de fechamento..." required={true} mask="only-numbers" style={inputStyle}/>
 						<Separator style={{height: 20}} />
-						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} mask="money" />
+						<Input name="limit" icon="dollar-sign" placeholder="Limite..." required={true} mask="money" style={inputStyle}/>
 						<Separator style={{height: 20}} />
-						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} mask="" />
+						<Input name="flag" icon="credit-card" placeholder="Bandeira..." required={true} mask="" style={inputStyle}/>
 						<Separator style={{height: 20}} />
-						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} mask="only-numbers" />
+						<Input name="cardNumber" icon="hash" placeholder="Número..." required={true} mask="only-numbers" style={inputStyle}/>
 						<Separator style={{height: 30}} />
 						<Button
 							title="Cadastrar"
@@ -150,6 +150,18 @@ function CreditCardForm(props) {
 }
 
 export default connect(mapStateToProps, dispatchToPropsClose)(CreditCardForm);
+
+const inputStyle = {
+	container: {},
+	childContainer: {},
+	input: {
+		fontSize: 20,
+		color: Colors.TEXT_PRIMARY,
+		width: '100%',
+		height: '100%',
+		paddingLeft: 10
+	}
+};
 
 const Header = styled.View`
 	height: 142px;

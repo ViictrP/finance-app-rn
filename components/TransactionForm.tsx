@@ -125,15 +125,15 @@ function TransactionForm(props) {
 				<Separator style={{height: 60}}/>
 				<Form ref={formRef} onSubmit={submit}>
 					<View style={{flex: 1, flexDirection: 'column'}}>
-						<Input name="title" icon="align-left" placeholder="Titulo..." required={true} mask=""/>
+						<Input name="title" icon="align-left" placeholder="Titulo..." required={true} mask="" style={inputStyle}/>
 						<Separator style={{height: 20}}/>
-						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask=""/>
+						<Input name="description" icon="align-left" placeholder="Descrição..." required={true} mask="" style={inputStyle}/>
 						<Separator style={{height: 20}}/>
-						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money"/>
+						<Input name="value" icon="dollar-sign" placeholder="Valor..." required={true} mask="money" style={inputStyle}/>
 						<Separator style={{height: 20}}/>
 						<DatePicker name="when" icon="calendar" required={true} />
 						<Separator style={{height: 20}}/>
-						<Input name="parcelAmount" icon="shopping-bag" placeholder="Quantidade de parcelas..." required={true} mask="only-numbers"/>
+						<Input name="parcelAmount" icon="shopping-bag" placeholder="Quantidade de parcelas..." required={true} mask="only-numbers" style={inputStyle}/>
 						<Separator style={{height: 30}}/>
 						<Button
 							title="Cadastrar"
@@ -147,6 +147,18 @@ function TransactionForm(props) {
 }
 
 export default connect(mapStateToProps, dispatchToPropsClose)(TransactionForm);
+
+const inputStyle = {
+	container: {},
+	childContainer: {},
+	input: {
+		fontSize: 20,
+		color: Colors.TEXT_PRIMARY,
+		width: '100%',
+		height: '100%',
+		paddingLeft: 10
+	}
+};
 
 const style = StyleSheet.create({
 	creditCard: {
