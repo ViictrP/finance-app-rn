@@ -4,6 +4,7 @@ export default {
     APP_BACKGROUND: '#FFF',
     TAB_ICON_DEFAULT: '#ccc',
     TAB_ICON_SELECTED: '#2f95dc',
+    BUTTON: '#1b7ce5',
     TAB_BAR: '#fefefe',
     ERROR_BACKGROUND: 'red',
     ERROR_TEXT: '#fff',
@@ -20,5 +21,6 @@ export default {
     TEXT_ACCENT: '#f30016',
     FADDED_TEXT: '#939393',
     SEPARATOR: '#E2E2E2',
+    FADDED_BACKGROUND: 'rgb(246,246,246)',
     FADDED: 'rgba(238,238,238,0.58)'
 };

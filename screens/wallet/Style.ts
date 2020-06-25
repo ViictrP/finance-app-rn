@@ -4,7 +4,7 @@ import Colors from "../../constants/Colors";
 
 export const ViewContainer = styled.View`
 	height: 100%;
-	background-color: #FFF;
+	background-color: ${Colors.WHITE};
 	border-top-left-radius: 40px;
 	border-top-right-radius: 40px;
 `;
