@@ -5,7 +5,6 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 
 import TabBarIcon from '../components/TabBarIcon';
 import WalletScreen from '../screens/wallet/WalletScreen';
-import LinksScreen from '../screens/links/LinksScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 import CardsScreen from '../screens/cards/CardsScreen';
 import {CreateNavigatorConfig} from "react-navigation";
@@ -65,21 +64,21 @@ CardsStack.navigationOptions = ({navigation}) => ({
 
 CardsStack.path = '';
 
-const LinksStack = createStackNavigator(
+const SearchTransactionStack = createStackNavigator(
 	{
-		Links: LinksScreen,
+		Search: SearchTransactionScreen,
 	},
 	config
 );
 
-LinksStack.navigationOptions = {
+SearchTransactionStack.navigationOptions = {
 	tabBarLabel: 'Buscar',
 	tabBarIcon: ({focused}) => (
 		<TabBarIcon focused={focused} name="search"/>
 	),
 };
 
-LinksStack.path = '';
+SearchTransactionStack.path = '';
 
 const SettingsStack = createStackNavigator(
 	{
@@ -100,7 +99,7 @@ SettingsStack.path = '';
 const tabNavigator = createBottomTabNavigator({
 	WalletStack,
 	CardsStack,
-	LinksStack,
+	SearchTransactionStack,
 	SettingsStack,
 });
 
