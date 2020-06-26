@@ -1,20 +1,23 @@
 import React, {useRef, useState} from 'react';
-import {Content, Header, HeaderButton, HeaderButtonText, HeaderContent, RootView, SearchBox} from "./Style";
 import {
-	Dimensions,
-	FlatList,
-	Platform,
-	SafeAreaView,
-	ScrollView,
-	TextInput,
-	TouchableOpacity,
-	View
-} from "react-native";
+	CloseButtonContainer,
+	Content,
+	Header,
+	HeaderButton,
+	HeaderButtonText,
+	HeaderContent,
+	InputContainer,
+	RootView,
+	SearchBox,
+	SearchBoxContainer
+} from "./Style";
+import {Dimensions, FlatList, Platform, SafeAreaView, ScrollView, TextInput, TouchableOpacity} from "react-native";
 import moment from "moment";
 import TransactionItem from "../../components/TransactionItem";
 import Colors from "../../constants/Colors";
 import makeElevation from "../../components/utils/ElevationShadowStyle";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import {ProductSansItalicText} from "../../components/StyledText";
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -31,26 +34,9 @@ export default function SearchTransactionScreen({navigation}) {
 					</HeaderButton>
 				</HeaderContent>
 			</Header>
-			<SearchBox style={{
-				...makeElevation(
-					Platform.OS === 'ios' ? 15 : 10
-				)
-			}}>
-				<View
-					style={{
-						width: '100%',
-						padding: 20,
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'center'
-					}}
-				>
-					<View
-						style={{
-							flexDirection: 'row',
-							alignItems: 'center'
-						}}
-					>
+			<SearchBox>
+				<SearchBoxContainer style={{...makeElevation(Platform.OS === 'ios' ? 15 : 10)}}>
+					<InputContainer>
 						<FeatherIcon
 							style={{
 								paddingRight: 20
@@ -63,7 +49,6 @@ export default function SearchTransactionScreen({navigation}) {
 							style={{
 								fontSize: 20,
 								paddingRight: 50,
-								backgroundColor: Colors.WHITE,
 								maxWidth: screenWidth - 84
 							}}
 							ref={inputRef}
@@ -78,17 +63,8 @@ export default function SearchTransactionScreen({navigation}) {
 								}
 							}}
 						/>
-					</View>
-					<View
-						style={{
-							position: 'absolute',
-							right: 0,
-							padding: 20,
-							backgroundColor: Colors.WHITE,
-							justifyContent: 'center',
-							alignItems: 'center'
-						}}
-					>
+					</InputContainer>
+					<CloseButtonContainer>
 						{
 							searchParam ?
 
@@ -106,8 +82,8 @@ export default function SearchTransactionScreen({navigation}) {
 
 								: null
 						}
-					</View>
-				</View>
+					</CloseButtonContainer>
+				</SearchBoxContainer>
 			</SearchBox>
 			<Content>
 				<SafeAreaView>

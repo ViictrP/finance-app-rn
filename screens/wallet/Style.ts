@@ -23,11 +23,13 @@ export const SearchView = styled.View`
 `;
 
 export const SearchBox = styled.View`
-	background-color: ${Colors.ACCENT};
+	background-color: ${Colors.FADDED_BACKGROUND};
 	padding: 10px 15px;
 	border-radius: 15px;
 	flex-direction: row;
 	align-items: center;
+	border-width: 1px;
+	border-color: ${Colors.FADDED};
 `;
 
 export const MoneyBox = styled.View`

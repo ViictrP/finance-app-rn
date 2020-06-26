@@ -105,14 +105,14 @@ function WalletScreen(props) {
 									ou categoria</ProductSansText>
 							</View>
 							<TouchableOpacity style={{marginTop: 25}} onPress={() => navigation.navigate('SearchTransactions')}>
-								<SearchBox>
+								<SearchBox style={{...makeElevation(Platform.OS === 'ios' ? 15 : 10)}}>
 									<FontAwesome5
 										name="search"
 										size={20}
 										style={{marginBottom: -3, marginRight: 20}}
 										color={Colors.FADDED_TEXT}
 									/>
-									<ProductSansText style={{fontSize: 20, color: Colors.FADDED_TEXT}}>Buscar</ProductSansText>
+									<ProductSansText style={{fontSize: 20, color: Colors.FADDED_TEXT}}>Buscar transações</ProductSansText>
 								</SearchBox>
 							</TouchableOpacity>
 						</SearchView>

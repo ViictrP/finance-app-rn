@@ -12,7 +12,7 @@ export const Header = styled.View`
 	width: 100%;
 	height: 100px;
 	justify-content: center;
-	background-color: ${Colors.PRIMARY};
+	background-color: ${Colors.WHITE};
 	padding: 0 3px;
 `;
 
@@ -31,14 +31,13 @@ export const HeaderButton = styled.TouchableOpacity`
 
 export const HeaderButtonText = styled.Text`
 	font-size: 19px;
- 	color: ${Colors.WHITE} 
+ 	color: ${Colors.BUTTON} 
 `;
 
 export const Content = styled.View`
 	width: 100%;
 	height: 100%;
-	padding-left: ${Layout.LAYOUT_SIDE_PADDINGS}px;
-	padding-right: ${Layout.LAYOUT_SIDE_PADDINGS}px;
+	padding: 0 ${Layout.LAYOUT_SIDE_PADDINGS}px;
 `;
 
 export const SearchBox = styled.View`
@@ -46,4 +45,31 @@ export const SearchBox = styled.View`
 	justify-content: center;
 	align-items: center;
 	background-color: ${Colors.WHITE};
+	padding: 0 ${Layout.LAYOUT_SIDE_PADDINGS}px;
+`;
+
+export const SearchBoxContainer = styled.View`
+	width: 100%;
+	padding: 15px;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background-color: ${Colors.FADDED_BACKGROUND};
+	border-radius: 20px;
+	border-width: 1px;
+	border-color: ${Colors.FADDED};
+`;
+
+export const InputContainer = styled.View`
+	flex-direction: row;
+	align-items: center;
+`;
+
+export const CloseButtonContainer = styled.View`
+	position: absolute;
+	right: 0;
+	padding: 0 20px;
+	background-color: ${Colors.FADDED_BACKGROUND};
+	justify-content: center;
+	align-items: center;
 `;
