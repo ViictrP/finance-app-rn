@@ -23,7 +23,7 @@ export const SearchView = styled.View`
 `;
 
 export const SearchBox = styled.View`
-	background-color: ${Colors.FADDED_BACKGROUND};
+	background-color: ${Colors.WHITE};
 	padding: 10px 15px;
 	border-radius: 15px;
 	flex-direction: row;

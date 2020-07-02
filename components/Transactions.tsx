@@ -97,9 +97,10 @@ function Transactions(props) {
 						<TransactionItem
 							title={item.title}
 							description={item.description}
-							icon={item.icon}
+							icon={'shopping-cart'}
 							value={item.value}
 							when={moment(item.when).format('LL')}
+							touchable={false}
 						/>
 					}
 				/>

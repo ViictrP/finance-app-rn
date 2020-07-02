@@ -20,6 +20,15 @@ class TransactionService {
 			.filtered(`invoiceId == ${id}`)
 			.map(InvoiceItem.fromRealmObject);
 	}
+
+	findTransactions(filter: string): InvoiceItem[] {
+		const titleQuery = `title CONTAINS[c] "${filter}"`;
+		const descriptionQuery = `OR description CONTAINS[c] "${filter}"`;
+		const realm = getRealm();
+		return realm.objects(SCHEMA)
+			.filtered(`${titleQuery} ${descriptionQuery}`)
+			.map(InvoiceItem.fromRealmObject);
+	}
 }
 
 export default new TransactionService();

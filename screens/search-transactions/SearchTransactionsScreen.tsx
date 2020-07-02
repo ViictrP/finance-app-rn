@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
 	CloseButtonContainer,
 	Content,
@@ -11,19 +11,48 @@ import {
 	SearchBox,
 	SearchBoxContainer
 } from "./Style";
-import {Dimensions, FlatList, Platform, SafeAreaView, ScrollView, TextInput, TouchableOpacity} from "react-native";
+import {
+	Dimensions,
+	FlatList,
+	Platform,
+	SafeAreaView,
+	ScrollView,
+	TextInput,
+	TouchableOpacity,
+	View
+} from "react-native";
 import moment from "moment";
 import TransactionItem from "../../components/TransactionItem";
 import Colors from "../../constants/Colors";
 import makeElevation from "../../components/utils/ElevationShadowStyle";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import {ProductSansItalicText} from "../../components/StyledText";
+import console from 'reactotron-react-native';
+import {ProductSansText} from "../../components/StyledText";
+import transactionService from '../../src/services/TransactionService';
 
 const screenWidth = Dimensions.get('window').width;
+const MINIMUM_SEARCH_LENGTH = 4;
 
 export default function SearchTransactionScreen({navigation}) {
 	const inputRef = useRef(null);
 	const [searchParam, setSearchParam] = useState('');
+	const [transactions, setTransactions] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+	useEffect(searchTransactions, [searchParam]);
+
+	function searchTransactions() {
+		if (searchParam && searchParam.length >= MINIMUM_SEARCH_LENGTH) {
+			setLoading(true);
+			const transactions = transactionService.findTransactions(searchParam);
+			console.log(transactions);
+			setTransactions(transactions);
+			setTimeout(() => setLoading(false), 1000);
+		} else {
+			setTransactions([])
+			setLoading(false);
+		}
+	}
 
 	return (
 		<RootView>
@@ -54,7 +83,7 @@ export default function SearchTransactionScreen({navigation}) {
 							ref={inputRef}
 							defaultValue={searchParam}
 							keyboardAppearance="dark"
-							placeholder="título, descrição, valor ou data..."
+							placeholder="buscar por título ou descrição..."
 							placeholderTextColor={Colors.FADDED_TEXT}
 							onChangeText={value => {
 								if (inputRef.current) {
@@ -72,53 +101,49 @@ export default function SearchTransactionScreen({navigation}) {
 									inputRef.current.value = null;
 									setSearchParam('');
 								}}>
-									<FeatherIcon
-										style={{}}
-										name='x'
-										size={28}
-										color={Colors.BUTTON}
-									/>
+									<FeatherIcon name='x' size={28} color={Colors.BUTTON}/>
 								</TouchableOpacity>
 
 								: null
 						}
 					</CloseButtonContainer>
+					<CloseButtonContainer>
+						{ loading ? <ProductSansText style={{color: Colors.FADDED_TEXT}}>carregando...</ProductSansText> : null }
+					</CloseButtonContainer>
 				</SearchBoxContainer>
 			</SearchBox>
 			<Content>
 				<SafeAreaView>
-					<ScrollView style={{paddingTop: 50, height: '100%'}} showsVerticalScrollIndicator={false}>
-						<FlatList
-							data={[
-								{
-									id: 1,
-									title: 'Apple Inc',
-									description: 'Online',
-									icon: 'shopping-cart',
-									value: 1199,
-									when: moment(new Date()).format('LL')
-								},
-								{
-									id: 2,
-									title: 'Facebook Inc',
-									description: 'Online',
-									icon: 'shopping-cart',
-									value: 560,
-									when: moment(new Date()).format('LL')
+					{ transactions.length ?
+						<ScrollView style={{paddingTop: 50, height: '100%'}} showsVerticalScrollIndicator={false}>
+							<FlatList
+								data={transactions}
+								keyExtractor={item => item.id.toString()}
+								renderItem={({item}) =>
+									<TransactionItem
+										title={item.title}
+										description={item.description}
+										icon={item.icon ? item.icon : 'shopping-cart'}
+										value={item.value}
+										when={moment(item.when).format('LL')}
+										touchable={true}
+									/>
 								}
-							]}
-							keyExtractor={item => item.id.toString()}
-							renderItem={({item}) =>
-								<TransactionItem
-									title={item.title}
-									description={item.description}
-									icon={item.icon ? item.icon : 'shopping-cart'}
-									value={item.value}
-									when={moment(item.when).format('LL')}
-								/>
-							}
-						/>
-					</ScrollView>
+							/>
+						</ScrollView>
+						:
+						<View style={{paddingTop: 50, height: '80%', justifyContent: 'center', alignItems: 'center'}}>
+							<FeatherIcon
+								style={{
+									paddingRight: 20
+								}}
+								name='shopping-cart'
+								size={80}
+								color={Colors.FADDED}
+							/>
+							<ProductSansText style={{fontSize: 40, color: Colors.FADDED}}>transações</ProductSansText>
+						</View>
+					}
 				</SafeAreaView>
 			</Content>
 		</RootView>

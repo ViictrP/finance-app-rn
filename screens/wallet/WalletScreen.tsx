@@ -181,6 +181,7 @@ function WalletScreen(props) {
 													icon={item.icon ? item.icon : 'shopping-cart'}
 													value={item.value}
 													when={moment(item.when).format('LL')}
+													touchable={false}
 												/>
 											}
 										/>
