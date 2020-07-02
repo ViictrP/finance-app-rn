@@ -127,6 +127,8 @@ export default function SearchTransactionScreen({navigation}) {
 										value={item.value}
 										when={moment(item.when).format('LL')}
 										touchable={true}
+										item={item}
+										onPress={(id) => navigation.navigate('Transaction', {id})}
 									/>
 								}
 							/>

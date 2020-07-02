@@ -9,6 +9,7 @@ import SettingsScreen from '../screens/settings/SettingsScreen';
 import CardsScreen from '../screens/cards/CardsScreen';
 import {CreateNavigatorConfig} from "react-navigation";
 import SearchTransactionScreen from "../screens/search-transactions/SearchTransactionsScreen";
+import Transaction from "../screens/transaction/Transaction";
 
 const stackConfing: CreateNavigatorConfig<any, any, any, any> = {headerMode: 'none'};
 
@@ -67,6 +68,7 @@ CardsStack.path = '';
 const SearchTransactionStack = createStackNavigator(
 	{
 		Search: SearchTransactionScreen,
+		Transaction: Transaction
 	},
 	config
 );

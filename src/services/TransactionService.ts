@@ -29,6 +29,11 @@ class TransactionService {
 			.filtered(`${titleQuery} ${descriptionQuery}`)
 			.map(InvoiceItem.fromRealmObject);
 	}
+
+	findById(transactionId: any): InvoiceItem {
+		const realm = getRealm();
+		return realm.objectForPrimaryKey<InvoiceItem>(SCHEMA, transactionId)
+	}
 }
 
 export default new TransactionService();

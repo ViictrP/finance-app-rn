@@ -8,7 +8,7 @@ import Layout from "../constants/Layout";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import makeElevation from "./utils/ElevationShadowStyle";
 
-export default function TransactionItem({title, description, icon, value, when, touchable}) {
+export default function TransactionItem({title, description, icon, value, when, touchable, ...rest}) {
 	return (
 		<View style={{backgroundColor: Colors.FADDED, marginBottom: 8, padding: 10, borderRadius: 20}}>
 			<View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -39,12 +39,11 @@ export default function TransactionItem({title, description, icon, value, when, 
 					</View>
 				</View>
 				<View style={{flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-end'}}>
-
 					<ProductSansText style={{color: Colors.FADDED_TEXT}}>
 						{when}
 					</ProductSansText>
 					{touchable ?
-						<TouchableOpacity style={{marginTop: 10, flexDirection: 'row', alignItems: 'center'}}>
+						<TouchableOpacity onPress={() => rest.onPress(rest.item.id)} style={{marginTop: 10, flexDirection: 'row', alignItems: 'center'}}>
 							<ProductSansText style={{fontSize: Layout.BUTTON_FONT_SIZE, color: Colors.BUTTON, marginRight: 5}}>abrir</ProductSansText>
 							<FeatherIcon name='external-link' size={Layout.BUTTON_FONT_SIZE} color={Colors.BUTTON}/>
 						</TouchableOpacity>
