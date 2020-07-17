@@ -29,6 +29,13 @@ class CardService {
             .filtered('userId == $0', userId)
             .map(CreditCard.fromRealmObject);
     }
+
+    public getAllCreditCards(): CreditCard[] {
+        const realm = getRealm();
+        return realm.objects(SCHEMA)
+            .filtered('userId == 1')
+            .map(CreditCard.fromRealmObject);
+	}
 }
 
 export default new CardService();

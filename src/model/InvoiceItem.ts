@@ -10,6 +10,7 @@ class InvoiceItem {
 	public parcelId?: number;
 	public invoiceId?: number;
 	public parcelNumber: number;
+	public budgetId: number;
 
 
 	constructor(id?: number, title?: string, description?: string, when?: Date, value?: number, icon?: string) {
@@ -34,6 +35,7 @@ class InvoiceItem {
 			categoryId: 'int',
 			parcelId: 'int',
 			invoiceId: 'int',
+			budgetId: 'int',
 			parcelNumber: 'int'
 		}
 	};
@@ -50,6 +52,7 @@ class InvoiceItem {
 		invoiceItem.parcelId = object['parcelId'];
 		invoiceItem.invoiceId = object['invoiceId'];
 		invoiceItem.parcelNumber = object['parcelNumber'];
+		invoiceItem.budgetId = object['budgetId'];
 		return invoiceItem;
 	}
 }

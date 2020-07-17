@@ -1,5 +1,5 @@
 import CreditCard from "../model/CreditCard";
-import cardService from '../services/CardService';
+import service from '../services/CardService';
 import invoiceItemService from '../services/InvoiceItemService';
 import invoiceService from '../services/InvoiceService';
 import transactionService from '../services/TransactionService';
@@ -15,7 +15,7 @@ type Transactions = Array<InvoiceItem>;
 class CreditCardDomain {
 
 	public save(card: CreditCard) {
-		const saved = cardService.save(card);
+		const saved = service.save(card);
 		this.generateInvoice(saved);
 	}
 
@@ -36,12 +36,16 @@ class CreditCardDomain {
 		return invoice;
 	}
 
+	public getAllCreditCards(): CreditCard[] {
+		return service.getAllCreditCards();
+	}
+
 	public getInvoice(creditCardId: number, month: number, year: number): Invoice {
 		return invoiceService.findByCreditCardMonthAndYear(creditCardId, month, year);
 	}
 
 	public findByUser(userId: number): Array<CreditCard> {
-		return cardService.findByUser(userId);
+		return service.findByUser(userId);
 	}
 
 	public getTransactions(creditCardId: number, month: number, year: number, quantity?: number): Transactions {
@@ -94,7 +98,7 @@ class CreditCardDomain {
 	}
 
 	private saveInvoiceItem(transaction: InvoiceItem, creditCardID: number, month: number, year: number) {
-		const card = cardService.findById(creditCardID);
+		const card = service.findById(creditCardID);
 		const day = moment(transaction.when).date();
 		let nextMonth = month;
 		let nextYear = year;

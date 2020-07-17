@@ -11,6 +11,12 @@ class InvoiceItemService {
 		return realm.objects(SCHEMA).filtered("invoiceId == $0", invoiceId)
 			.map(InvoiceItem.fromRealmObject);
 	}
+
+	findByBudget(budgetId: number): Transactions {
+		const realm = getRealm();
+		return realm.objects(SCHEMA).filtered("budgetId == $0", budgetId)
+			.map(InvoiceItem.fromRealmObject);
+	}
 }
 
 export default new InvoiceItemService();
