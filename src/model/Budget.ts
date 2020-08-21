@@ -27,7 +27,6 @@ export default class Budget {
 
 	addTransaction(transaction: InvoiceItem) {
 		transaction.budgetId = this.id;
-		transaction.walletId = this.walletId;
 		this.transactions.push(transaction);
 	}
 

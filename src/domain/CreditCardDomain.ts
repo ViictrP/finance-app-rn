@@ -61,6 +61,7 @@ class CreditCardDomain {
 		transaction.parcelAmount = Number(transaction.parcelAmount);
 		transaction.parcelId = 1;
 		transaction.parcelNumber = 1;
+		transaction.budgetId = 1;
 		console.log(transaction);
 		const month = moment(transaction.when).month() + Constants.ONE;
 		const year = moment(transaction.when).year();

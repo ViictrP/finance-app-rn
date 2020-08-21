@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Container, RootView} from "./Style";
-import console from 'reactotron-react-native';
 import service from '../../src/services/TransactionService';
 import {ProductSansText} from "../../components/StyledText";
 import TransactionItem from "../../components/TransactionItem";
 import moment from "moment";
-import {Animated, SafeAreaView, ScrollView, StyleSheet} from "react-native";
+import {SafeAreaView, ScrollView, StyleSheet} from "react-native";
 import Colors from "../../constants/Colors";
 import CreditCardComponent from "../../components/CreditCard";
 import Separator from "../../components/Separator";
@@ -34,38 +33,38 @@ export default function Transaction(props) {
 
 	return (
 		<RootView>
-				<Header>
-					<HeaderContent>
-						<HeaderButton onPress={() => navigation.goBack()}>
-							<HeaderButtonText>voltar</HeaderButtonText>
-						</HeaderButton>
-					</HeaderContent>
-				</Header>
-				<SafeAreaView style={{backgroundColor: Colors.APP_BACKGROUND}}>
-					<ScrollView style={{height: '100%'}} showsVerticalScrollIndicator={false}>
-						{ loading ? <ProductSansText>carregando...</ProductSansText> :
-							<Container>
-								<CreditCardComponent
-									style={style.creditCard}
-									shadow={true}
-									flag="Mastercard"
-									limit="12.500,00"
-									title="Itaucard Visa Gold"
-									number="1542"
-								/>
-								<Separator style={{height: 20}} />
-								<TransactionItem
-									title={transaction.title}
-									description={transaction.description}
-									icon={transaction.icon ? transaction.icon : 'shopping-cart'}
-									value={transaction.value}
-									when={moment(transaction.when).format('LL')}
-									touchable={false}
-								/>
-							</Container>
-						}
-					</ScrollView>
-				</SafeAreaView>
+			<Header>
+				<HeaderContent>
+					<HeaderButton onPress={() => navigation.goBack()}>
+						<HeaderButtonText>voltar</HeaderButtonText>
+					</HeaderButton>
+				</HeaderContent>
+			</Header>
+			<SafeAreaView style={{backgroundColor: Colors.APP_BACKGROUND}}>
+				<ScrollView style={{height: '100%'}} showsVerticalScrollIndicator={false}>
+					{loading ? <ProductSansText>carregando...</ProductSansText> :
+						<Container>
+							<CreditCardComponent
+								style={style.creditCard}
+								shadow={true}
+								flag="Mastercard"
+								limit="12.500,00"
+								title="Itaucard Visa Gold"
+								number="1542"
+							/>
+							<Separator style={{height: 20}}/>
+							<TransactionItem
+								title={transaction.title}
+								description={transaction.description}
+								icon={transaction.icon ? transaction.icon : 'shopping-cart'}
+								value={transaction.value}
+								when={moment(transaction.when).format('LL')}
+								touchable={false}
+							/>
+						</Container>
+					}
+				</ScrollView>
+			</SafeAreaView>
 		</RootView>
 	);
 }
